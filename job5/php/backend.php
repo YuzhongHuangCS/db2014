@@ -31,52 +31,51 @@ switch ($action) {
 
 	case 'insert':
 		if(($id == NULL) || ($name == NULL) || ($age == NULL)){
-			echo('Parameter incomplete.');
+			echo('输入不完整');
 			break;
 		}
 		$sql = 'INSERT INTO student(id, name, age) VALUES (' . $id . ', ' . $name . ', ' . $age . ')';
 		$result = mysql_query($sql, $con);
 		
-		//use 1 for success, and 2 for fail
 		if($result){
-			echo('1');
+			echo('保存成功');
 		} else{
-			echo('2');
+			echo('保存失败，请检查输入');
 		}
 		break;
 
 	case 'update':
 		if(($id == NULL) || ($name == NULL) || ($age == NULL)){
-			echo('Parameter incomplete.');
+			echo('输入不完整');
 			break;
 		}
 		$sql = 'UPDATE student SET name = ' . $name . ', age = ' . $age . ' WHERE id = ' . $id ;
 		$result = mysql_query($sql, $con);
 		
 		if($result){
-			echo('1');
+			echo('保存成功');
 		} else{
-			echo('2');
+			echo('保存失败，请检查输入');
 		}
 		break;
 
 	case 'delete':
 		if($id == NULL){
-			echo('Parameter incomplete.');
+			echo('输入不完整');
 			break;
 		}
 		$sql = 'DELETE FROM student WHERE id = ' . $id; 
 		$result = mysql_query($sql, $con);
 		
 		if($result){
-			echo('1');
+			echo('保存成功');
 		} else{
-			echo('2');
+			echo('保存失败，请检查输入');
 		}
 		break;
 
 	default:
-		echo('No proper parameter.');
+		echo('非法操作');
 		break;
 }
 mysql_close($con);
