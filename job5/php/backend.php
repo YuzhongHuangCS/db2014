@@ -68,9 +68,9 @@ switch ($action) {
 		$result = mysql_query($sql, $con);
 		
 		if($result){
-			echo('保存成功');
+			echo('删除成功');
 		} else{
-			echo('保存失败，请检查输入');
+			echo('删除失败，请检查输入');
 		}
 		break;
 
