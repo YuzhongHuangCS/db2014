@@ -4,12 +4,7 @@ $id		= filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
 $name	= filter_input(INPUT_GET, 'name', FILTER_SANITIZE_STRING);
 $age	= filter_input(INPUT_GET, 'age', FILTER_SANITIZE_NUMBER_INT);
 
-$con = mysql_connect('localhost','www-data');
-if (!$con){
-	die(mysql_error());
-}
-mysql_query("set character set 'utf8'");
-mysql_select_db("db2014", $con);
+require('init.php');
 
 switch ($action) {
 	case 'select':
@@ -34,7 +29,7 @@ switch ($action) {
 			echo('输入不完整');
 			break;
 		}
-		$sql = 'INSERT INTO student(id, name, age) VALUES (' . $id . ', ' . $name . ', ' . $age . ')';
+		$sql = 'INSERT INTO student(id, name, age) VALUES (' . $id . ', "' . $name . '", ' . $age . ')';
 		$result = mysql_query($sql, $con);
 		
 		if($result){
@@ -49,7 +44,7 @@ switch ($action) {
 			echo('输入不完整');
 			break;
 		}
-		$sql = 'UPDATE student SET name = ' . $name . ', age = ' . $age . ' WHERE id = ' . $id ;
+		$sql = 'UPDATE student SET name = "' . $name . '", age = ' . $age . ' WHERE id = ' . $id ;
 		$result = mysql_query($sql, $con);
 		
 		if($result){
