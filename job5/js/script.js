@@ -42,7 +42,7 @@ function insertStu(){
 		if(data == '保存成功'){
 			$('#insertModal .modal-body').prepend('<div class="alert alert-success" id="insertResult" style="display: none"></div>');
 			$('#insertResult').text(data);
-			$('#insertResult').fadeIn('slow', function() {
+			$('#insertResult').fadeIn(function() {
 				setTimeout(function(){
 					$('#insertModal').modal('hide');
 					selectStu();
@@ -52,7 +52,7 @@ function insertStu(){
 		} else{
 			$('#insertModal .modal-body').prepend('<div class="alert alert-danger" id="insertResult" style="display: none"></div>');
 			$('#insertResult').text(data);
-			$('#insertResult').fadeIn('slow');
+			$('#insertResult').fadeIn();
 		}
 	});
 };
@@ -103,7 +103,7 @@ function updateStu(){
 		if(data == '保存成功'){
 			$('#updateModal .modal-body').prepend('<div class="alert alert-success" id="updateResult" style="display: none"></div>');
 			$('#updateResult').text(data);
-			$('#updateResult').fadeIn('slow', function() {
+			$('#updateResult').fadeIn(function() {
 				setTimeout(function(){
 					$('#updateModal').modal('hide');
 					selectStu();
@@ -112,7 +112,7 @@ function updateStu(){
 		} else{
 			$('#updateModal .modal-body').prepend('<div class="alert alert-danger" id="updateResult" style="display: none"></div>');
 			$('#updateResult').text(data);
-			$('#updateResult').fadeIn('slow');
+			$('#updateResult').fadeIn();
 		}
 	});
 };
@@ -171,13 +171,13 @@ function deleteStu(){
 	if(errorCount == 0){
 		$('#deleteInput').fadeOut(function() {
 			$('#deleteModal .modal-body').append('<div class="alert alert-success" id="deleteResult" style="display: none">所选条目已删除</div>');
-			$('#deleteResult').fadeIn('slow', function() {
+			$('#deleteResult').fadeIn(function() {
 					$('#deleteModal').modal('hide');
 					selectStu();
 			});
 		});
 	} else{
 		$('#deleteModal .modal-body').append('<div class="alert alert-danger" id="deleteResult" style="display: none">删除失败，请检查输入</div>');
-		$('#deleteResult').fadeIn('slow');
+		$('#deleteResult').fadeIn();
 	}
 };
