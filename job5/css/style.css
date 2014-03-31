@@ -2,5 +2,4 @@ body{background:url(../img/bg.png) repeat fixed;font-family:"Hiragino Sans GB","
 .jumbotron{opacity:.3;margin-bottom:1.8rem}.jumbotron h1{margin-left:25rem;font-size:5.5rem;color:#000;opacity:1}
 #upbutton{margin:0 0 0 33rem}
 .panel{margin:1.8rem auto;font-size:3rem;width:60%}.panel .table{font-size:1.5rem}
-#insertResult{display:none}
 #footer{margin:4rem 0 1rem;text-align:center;font-size:1.5rem;color:#eee;opacity:.8}
