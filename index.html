@@ -28,7 +28,7 @@ div:hover{
 	background-color: #FFF;
 	color: #000;
 }
-p:first-child{
+.vertical{
 	margin-top: 5.5rem;
 }
 #author{
@@ -38,27 +38,35 @@ p:first-child{
 	text-align: right;
 	font-size: 1.2rem;
 	line-height: 1rem;
+	padding-right: 6px;
+	border-right: 3px solid black;
+}
+#author p:first-child{
+	margin-top: 0;
+}
+#author p:last-child{
+	margin-bottom: 0;
 }
 </style>
 <body>
 	<div id="line">
 		<div class="black" id="job5" onclick="location.href='job5'">
-			<p>Job5</p>
+			<p class="vertical">Job5</p>
 			<p>学生信息管理系统</p>
 		</div>
 		<div class="black" id="project">
-			<p>Project</p>
+			<p class="vertical">Project</p>
 			<p>招生后台管理系统</p>
 		</div>
 		<div class="black" id="more">
-			<p>Any more?</p>
+			<p class="vertical">Any more?</p>
 			<p>coding...</p>
 		</div>
 	</div>
 	<div id="author">
 		<p>Database Concept 2014</p>
 		<p>Course Presentation</p>
-		<p><small>by 黄羽众PillowSky</small></p>
+		<p><small>By 黄羽众PillowSky</small></p>
 	</div>
 </body>
 </html>
