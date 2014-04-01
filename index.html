@@ -24,29 +24,41 @@ body{
 	cursor: pointer;
 	transition: all 1s;
 }
-:hover{
+div:hover{
 	background-color: #FFF;
 	color: #000;
 }
-.vertical{
-	margin-top: 6rem;
+p:first-child{
+	margin-top: 5.5rem;
+}
+#author{
+	position: absolute;
+	bottom: 3rem;
+	right: 4rem;
+	text-align: right;
+	font-size: 1.2rem;
+	line-height: 1rem;
 }
 </style>
 <body>
 	<div id="line">
 		<div class="black" id="job5" onclick="location.href='job5'">
-			<p class="vertical">Job5</p>
+			<p>Job5</p>
 			<p>学生信息管理系统</p>
 		</div>
 		<div class="black" id="project">
-			<p class="vertical">Project</p>
+			<p>Project</p>
 			<p>招生后台管理系统</p>
 		</div>
 		<div class="black" id="more">
-			<p class="vertical">any more?</p>
+			<p>Any more?</p>
 			<p>coding...</p>
 		</div>
 	</div>
-
+	<div id="author">
+		<p>Database Concept 2014</p>
+		<p>Course Presentation</p>
+		<p><small>by 黄羽众PillowSky</small></p>
+	</div>
 </body>
 </html>
