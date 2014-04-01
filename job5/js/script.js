@@ -25,7 +25,7 @@ function selectStu(listID){
 		} else{
 			content = '<div class="alert alert-danger">网络好像挂了诶</div>';
 		}
-
+		$('#loading').slideUp('slow');
 		$('#infoTable').html(content);
 	});
 };
