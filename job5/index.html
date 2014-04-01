@@ -3,7 +3,6 @@
 <head>
 	<meta charset="UTF-8">
 	<title>学生信息管理系统</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 	<link rel="stylesheet" href="http://lib.sinaapp.com/js/bootstrap/3.0.0/css/bootstrap.min.css"/>
 	<link rel="stylesheet" href="css/style.css"/>
 </head>
@@ -12,7 +11,7 @@
 			<h1>学生信息管理系统</h1>
 		</div>
   		<div class="btn-group btn-group-lg" id="upbutton">
- 			<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#insertModal">增加条目</button>
+ 			<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#insertModal" onclick="showInsertStu()">增加条目</button>
 			<button type="button" class="btn btn-warning" data-toggle="modal" data-target="#updateModal" onclick="showUpdateStu()">修改条目</button>
 			<button type="button" class="btn btn-danger" data-toggle="modal" data-target="#deleteModal" onclick="showDeleteStu()">删除条目</button>
 		</div>
@@ -39,7 +38,7 @@
       				</div>
       				<div class="modal-footer">
        					<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-        				<button type="button" class="btn btn-primary" onclick="insertStu()">保存</button>
+        				<button type="button" class="btn btn-primary" onclick="insertStu()" id="insertButton">保存</button>
       				</div>
     			</div>	
  			</div>
@@ -59,7 +58,7 @@
       				</div>
       				<div class="modal-footer">
        					<button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-        				<button type="button" class="btn btn-warning" onclick="updateStu()">修改</button>
+        				<button type="button" class="btn btn-warning" id="updateButton" onclick="updateStu()">修改</button>
       				</div>
     			</div>	
  			</div>

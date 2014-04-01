@@ -29,12 +29,15 @@ function selectStu(listID){
 		$('#infoTable').html(content);
 	});
 };
-
+function showInsertStu(){
+	$('#insertButton').prop('disabled', false);
+}
 function insertStu(){
 	var insertData;
 
 	$('#insertResult').remove();
-	
+	$('#insertButton').prop('disabled', true);
+
 	insertData = 'action=insert&';
 	insertData += $('#insertInput').serialize();
 	
@@ -53,6 +56,7 @@ function insertStu(){
 			$('#insertModal .modal-body').prepend('<div class="alert alert-danger" id="insertResult" style="display: none"></div>');
 			$('#insertResult').text(data);
 			$('#insertResult').fadeIn();
+			$('#insertButton').prop('disabled', false);
 		}
 	});
 };
@@ -66,6 +70,7 @@ function showUpdateStu(){
 
 	$('#updateResult').remove();
 	$('#updateInput').empty();
+	$('#updateButton').prop('disabled', false);
 
 	if(updateArray.length == 1){
 		$('#updateModal .btn-warning').show();
@@ -94,6 +99,7 @@ function updateStu(){
 	var updateData;
 
 	$('#updateResult').remove();
+	$('#updateButton').prop('disabled', true);
 
 	updateData = 'action=update&id=';
 	updateData += json[updateArray[0]].id + '&';
@@ -113,6 +119,7 @@ function updateStu(){
 			$('#updateModal .modal-body').prepend('<div class="alert alert-danger" id="updateResult" style="display: none"></div>');
 			$('#updateResult').text(data);
 			$('#updateResult').fadeIn();
+			$('#updateButton').prop('disabled', false);
 		}
 	});
 };
@@ -131,10 +138,11 @@ function showDeleteStu(){
 	$('#deleteResult').remove();
 	$('#deleteInput').empty();
 	$('#deleteInput').show();
+	$('#deleteButton').prop('disabled', false);
 
 	if(deleteArray.length > 0){
 		$('#deleteConfirm').text("你真的要删除这些条目了吗？");
-		$('#deleteModal .btn-primary').show();
+		$('#deleteModal .btn-danger').show();
 
 		content = '<tr><th>学号:</th><th>姓名:</th><th>年龄:</th></tr>'
 		for(var i in deleteArray){
@@ -148,7 +156,7 @@ function showDeleteStu(){
 		$('#deleteInput').html(content);
 	} else{
 		$('#deleteConfirm').text("什么都没选呀");
-		$('#deleteModal .btn-primary').hide();
+		$('#deleteModal .btn-danger').hide();
 	}
 };
 function deleteStu(){
@@ -159,6 +167,7 @@ function deleteStu(){
 	var errorCount = 0;
 
 	$('#deleteResult').remove();
+	$('#deleteButton').prop('disabled', true);
 
 	for(var i in deleteArray){
 		$.get('php/backend.php', {action: 'delete', id: json[deleteArray[i]].id}, function(data){
@@ -179,5 +188,6 @@ function deleteStu(){
 	} else{
 		$('#deleteModal .modal-body').append('<div class="alert alert-danger" id="deleteResult" style="display: none">删除失败，请检查输入</div>');
 		$('#deleteResult').fadeIn();
+		$('#deleteButton').prop('disabled', false);
 	}
 };
