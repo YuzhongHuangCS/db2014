@@ -1,17 +1,26 @@
 <?php
+	require('init.php');
 
-	$action = filter_input(INPUT_POST, 'action', FILTER_SANITIZE_STRING);
-	$categoryID = filter_input(INPUT_POST, 'categoryID', FILTER_SANITIZE_NUMBER_INT);
-	$categoryName = filter_input(INPUT_POST, 'categoryName', FILTER_SANITIZE_STRING);
-	$title = filter_input(INPUT_POST, 'title', FILTER_SANITIZE_STRING);
-	$press = filter_input(INPUT_POST, 'press', FILTER_SANITIZE_STRING);
-	$year = filter_input(INPUT_POST, 'year', FILTER_SANITIZE_NUMBER_INT);
-	$author = filter_input(INPUT_POST, 'author', FILTER_SANITIZE_STRING);
-	$year = filter_input(INPUT_POST, 'year', FILTER_SANITIZE_NUMBER_INT);
-	$price = filter_input(INPUT_POST, 'price', FILTER_SANITIZE_NUMBER_FLOAT);
-	$loginName = filter_input(INPUT_POST, 'loginName', FILTER_SANITIZE_STRING);
-	$password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING);
+	$action = filter_input(INPUT_GET, 'action', FILTER_SANITIZE_STRING);
 
 	switch($action){
-		case 'login': 
+		case 'selectAll':
+			$sql = 'SELECT book.bookID, book.title, categories.categoryName, book.author, book.press, book.year, book.price, book.stock, book.total FROM book JOIN categories ON book.categoryID = categories.categoryID';
+			$result = $conn->query($sql);
+			$row = array();
+			while($r = $result->fetch_assoc()){
+				foreach ($r as $key => $value) {
+					$r[$key] = urlencode($value);
+				}
+				$row[] = $r;
+			}
+			$json = urldecode(json_encode($row));
+			header('Content-Type: application/json; charset=utf-8');
+			echo($json);
+			break;
+
+		default:
+			echo('illegal operation');
+			break;
 	}
+?>

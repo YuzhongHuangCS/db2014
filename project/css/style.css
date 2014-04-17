@@ -6,7 +6,16 @@ nav #login{right:2rem}
 #actionRow #query{color:#76cc1e;border:2px solid #76cc1e}#actionRow #query:hover{color:#fff;background-color:#76cc1e}
 #actionRow #borrow{color:#f9ee20;border:2px solid #f9ee20}#actionRow #borrow:hover{color:#fff;background-color:#f9ee20}
 #actionRow #return{color:#f66b30;border:2px solid #f66b30}#actionRow #return:hover{color:#fff;background-color:#f66b30}
+#adminRow{margin:10% auto 0;width:80%}#adminRow .actionButton{display:inline-block;margin-left:10rem;padding:1rem;min-width:6.8rem;font-size:1.5rem;text-align:center;border-radius:.6rem;transition:all .6s}
+#adminRow #import{margin-left:20rem;color:#428bca;border:2px solid #428bca}#adminRow #import:hover{color:#fff;background-color:#428bca}
+#adminRow #admin{color:#f0ad4e;border:2px solid #f0ad4e}#adminRow #admin:hover{color:#fff;background-color:#f0ad4e}
 #loginView{position:absolute;top:0;left:100%;background-color:#000;width:100%;height:100%;opacity:0;transition:all .6s;z-index:10}#loginView #tip{margin:8% auto 0;padding:1rem;width:25%;color:#f66b30;text-align:center;font-size:1.8rem;border:2px solid #f66b30;border-radius:.6rem}
 #loginView #loginArea{margin:3rem auto 0;padding:.5rem 1rem 2rem;width:30%;text-align:center;font-size:1.2rem;color:#fff;border:2px solid #f66b30;border-radius:.6rem}#loginView #loginArea p{margin:2.5rem 0}#loginView #loginArea p input{margin-left:1.5rem;padding:.5rem;color:#333;opacity:.9;border:0;border-radius:6px}
 #loginView #loginArea #loginButton{float:right;margin:-1.6rem 1rem 0 0;padding:.5rem 1.5rem;color:#76cc1e;font-size:1.2rem;border:2px solid #76cc1e;border-radius:.6rem;transition:all .6s;cursor:pointer}#loginView #loginArea #loginButton:hover{color:#fff;background-color:#76cc1e}
 #loginView #loginArea #cancelButton{float:left;margin:-1.6rem 0 0 1rem;padding:.5rem 1.5rem;color:#f66b30;font-size:1.2rem;border:2px solid #f66b30;border-radius:.6rem;transition:all .6s;cursor:pointer}#loginView #loginArea #cancelButton:hover{color:#fff;background-color:#f66b30}
+#filter{position:fixed;top:0;width:100%;height:100%;background-color:#000;opacity:.4;z-index:-10}
+#content #controlBar{margin:3rem auto 0;text-align:center;font-size:1.2rem}
+#content #search{display:inline-block}
+#content #sort{display:inline-block}
+#content table{margin:3rem auto;width:80%;color:#333;border-width:1px;border-color:#666;border-collapse:collapse}#content table th{border-width:1px;padding:8px;border-style:solid;border-color:#666;background-color:#dedede}
+#content table td{border-width:1px;padding:1rem 2rem;border-style:solid;border-color:#666;background-color:#fff}
