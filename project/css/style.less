@@ -1,0 +1,144 @@
+/*	Style Written for the Library System
+ *	Written by PillowSky(Yuzhong Huang)
+ */
+
+@green: #76CC1E;
+@yellow: #F9EE20;
+@orange: #F66B30;
+
+body{
+	background: url(../img/bg.jpg) no-repeat fixed;
+	background-size: cover;
+	overflow-x: hidden;
+}
+nav{
+	background-color: #000;
+	opacity: 0.6;
+	height: 3.4rem;
+	span{
+		position: absolute;
+		color: #FFF;
+		font-size: 1.2rem;
+		padding: 1rem;
+		transition: all 0.6s;
+		&:hover{
+			background-color: #666;
+		}
+	}
+	#title{
+		left: 4rem;
+	}
+	#login{
+		right: 2rem;
+	}
+}
+#actionRow{
+	margin: 12% auto 0;
+	width: 80%;
+	.actionButton{
+		display: inline-block;
+		margin-left: 10rem;
+		padding: 1rem;
+		min-width: 6.8rem;
+		font-size: 1.5rem;
+		text-align: center;
+		border-radius: 0.6rem;
+		transition: all 0.6s;
+	}
+	#query{
+		color: @green;
+		border: 2px solid @green;
+		&:hover{
+			color: #FFF;
+			background-color: @green;
+		}
+	}
+	#borrow{
+		color: @yellow;
+		border: 2px solid @yellow;
+		&:hover{
+			color: #FFF;
+			background-color: @yellow;
+		}
+	}
+	#return{
+		color: @orange;
+		border: 2px solid @orange;
+		&:hover{
+			color: #FFF;
+			background-color: @orange;
+		}
+	}
+}
+#loginView{
+	position: absolute;
+	top: 0;
+	left: 100%;
+	background-color: #000;
+	width: 100%;
+	height: 100%;
+	opacity: 0;
+	transition: all 0.6s;
+	z-index: 10;
+	#tip{
+		margin: 8% auto 0;
+		padding: 1rem;
+		width: 25%;
+		color: @orange;
+		text-align: center;
+		font-size: 1.8rem;
+		border: 2px solid @orange;
+		border-radius: 0.6rem;
+	}
+	#loginArea{
+		margin: 3rem auto 0;
+		padding: 0.5rem 1rem 2rem;
+		width: 30%;
+		text-align: center;
+		font-size: 1.2rem;
+		color: #FFF;
+		border: 2px solid @orange;
+		border-radius: 0.6rem;
+		p{
+			margin: 2.5rem 0;
+			input{
+				margin-left: 1.5rem;
+				padding: 0.5rem;
+				color: #333;
+				opacity: 0.9;
+				border: 0;
+				border-radius: 6px;
+			}
+		}
+		#loginButton{
+			float: right;
+			margin: -1.6rem 1rem 0 0;
+			padding: 0.5rem 1.5rem;
+			color: @green;
+			font-size: 1.2rem;
+			border: 2px solid @green;
+			border-radius: 0.6rem;
+			transition: all 0.6s;
+			cursor: pointer;
+			&:hover{
+				color: #FFF;
+				background-color: @green;
+			}
+		}
+		#cancelButton{
+			float: left;
+			margin: -1.6rem 0 0 1rem;
+			padding: 0.5rem 1.5rem;
+			color: @orange;
+			font-size: 1.2rem;
+			border: 2px solid @orange;
+			border-radius: 0.6rem;
+			transition: all 0.6s;
+			cursor: pointer;
+			&:hover{
+				color: #FFF;
+				background-color: @orange;
+			}
+		}
+	}
+}
