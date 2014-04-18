@@ -33,7 +33,8 @@ nav #login{right:2rem}
 #adminBook #controlBar{margin:3rem auto 0;text-align:center;font-size:1.2rem;color:#fff}
 #adminBook #search{display:inline-block}
 #adminBook #sort{display:inline-block}
-#adminBook input{color:#000}
+#adminBook label{color:#fff}
+#adminBook form{color:#000}
 #adminBook select{color:#000}
 #adminBook table{margin:3rem auto;width:90%;color:#333;border-width:1px;border-color:#666;border-collapse:collapse}#adminBook table th{border-width:1px;padding:1rem;border-style:solid;border-color:#666;background-color:#dedede}
 #adminBook table td{border-width:1px;padding:1rem;border-style:solid;border-color:#666;background-color:#fff}

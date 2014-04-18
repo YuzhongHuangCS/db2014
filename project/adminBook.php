@@ -19,7 +19,12 @@
 			<input type="text" ng-model="newCategory" placeholder="新分类" />
 			<input type="submit" value="提交" ng-click="addCategory()"/>
 		</form>
-		
+		<form action="php/fileUpload.php" method="post" enctype="multipart/form-data">
+			<label for="file">Filename:</label> <br />
+			<input type="file" name="file" id="file" /> 
+			<br />
+			<input type="submit" name="submit" value="Submit" />
+		</form>
 		<form ng-model="newBook">
 			<input type="text" ng-model="newBook.title" placeholder="书名" />
 			<select ng-model="newBook.categoryID">
