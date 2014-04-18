@@ -13,7 +13,7 @@
 <?php
 	require('php/nav.php');
 ?>
-<div id="content" ng-app ng-controller="BookListCtrl">
+<div id="book" ng-app ng-controller="BookListCtrl">
 	<div id="controlBar">
 		<div id="search">Search: <input ng-model="query"></div>
 		<div id="sort">
@@ -42,6 +42,7 @@
 			<th>价格</th>
 			<th>当前库存</th>
 			<th>总藏书量</th>
+			<th>借书</th>
 		</tr>
     	<tr ng-repeat="book in books | filter:query | orderBy:orderProp">
     		<td>{{book.bookID}}</td>
@@ -53,6 +54,7 @@
 			<td>{{book.price}}</td>
 			<td>{{book.stock}}</td>
 			<td>{{book.total}}</td>
+			<td ng-click="borrow(book.bookID)">借书</td>
 		</tr>
 	</table>
 </div>

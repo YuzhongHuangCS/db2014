@@ -61,8 +61,213 @@ function checkLogin(){
 }
 
 function BookListCtrl($scope, $http) {
-	$http.get('php/backend.php?action=selectAll').success(function(data) {
+	$http.get('php/backend.php?action=showBook').success(function(data) {
 		$scope.books = data;
 	});
-	$scope.orderProp = 'bookID';
+	$scope.orderProp = 'title';
+
+	$scope.borrow = function(bookID) {
+    	var send, cardID;
+    	cardID = prompt("请输入借书证号");
+    	if ((cardID != null) && (cardID != "")){
+    		send = 'php/backend.php?action=borrow&bookID=' + bookID + '&cardID=' + cardID ;
+    		$http.get(send).success(function(data) {
+    			if(data > 0){
+    				alert('借书成功');
+    				$http.get('php/backend.php?action=showBook').success(function(data) {
+						$scope.books = data;
+					});
+    			} else{
+    				alert('借书失败');
+    			}
+    		})
+    	}
+  	}
+}
+function cardControl($scope, $http) {
+	var send, cardID;
+	window.cardID = cardID = prompt("请输入借书证号");
+
+	if ((cardID != null) && (cardID != "")){
+		send = 'php/backend.php?action=showCardInfo&cardID=' + cardID;
+		$http.get(send).success(function(data) {
+			$scope.cardInfo = data;
+			$('#cardInfo').slideDown();
+		});
+	};
+
+	send = 'php/backend.php?action=showBorrow&cardID=' + cardID;
+	$http.get(send).success(function(data) {
+		$scope.borrows = data;
+	});
+	$scope.orderProp = 'title';
+
+	$scope.return = function(borrowID) {
+    	var send;
+
+    	send = 'php/backend.php?action=return&borrowID=' + borrowID;
+    	$http.get(send).success(function(data) {
+    		if(data == 0){
+    			alert('还书成功');
+    			send = 'php/backend.php?action=showBorrow&cardID=' + cardID;
+    			$http.get(send).success(function(data) {
+					$scope.borrows = data;
+				});
+    		} else{
+    			alert('还书失败');
+    		}
+    	})
+  	}
+}
+
+function adminBookControl($scope, $http) {
+
+	$scope.addCategory = function() {
+		var send;
+
+		send='php/backend.php?action=addCategory&categoryName=' + $scope.newCategory;
+		$http.get(send).success(function(data) {
+			if(data == 0){
+				alert('添加分类成功');
+			} else{
+				alert('添加分类失败');
+			}
+		});
+	}
+
+	$http.get('php/backend.php?action=showCategory').success(function(categoryData) {
+		$scope.categories = categoryData;
+	});
+
+	$scope.updateBook = function(){
+		var send;
+
+		send='php/backend.php?action=updateBook&bookID=' + $scope.newBook.bookID  + '&categoryID=' + $scope.newBook.categoryID + '&title=' + $scope.newBook.title + '&press=' + $scope.newBook.press + '&year=' + $scope.newBook.year + '&author=' + $scope.newBook.author + '&price=' + $scope.newBook.price + '&stock='+ $scope.newBook.stock + '&total=' + $scope.newBook.total;
+		$http.get(send).success(function(data) {
+			if(data == 0){
+				alert('更新图书成功');
+			} else{
+				alert('更新图书失败');
+			}
+		});
+	}
+
+	$http.get('php/backend.php?action=showBook').success(function(data) {
+		$scope.books = data;
+	});
+	$scope.orderProp = 'title';
+
+	$scope.editBook = function(bookID){
+		$.each($scope.books, function(key, value) {
+			if((value['bookID'] == bookID)){
+				$scope.newBook = value;
+			}
+		});
+	}
+
+
+	$scope.borrow = function(bookID) {
+    	var send, cardID;
+    	cardID = prompt("请输入借书证号");
+    	if ((cardID != null) && (cardID != "")){
+    		send = 'php/backend.php?action=borrow&bookID=' + bookID + '&cardID=' + cardID ;
+    		$http.get(send).success(function(data) {
+    			if(data > 0){
+    				alert('借书成功');
+    				$http.get('php/backend.php?action=showBook').success(function(data) {
+						$scope.books = data;
+					});
+    			} else{
+    				alert('借书失败');
+    			}
+    		})
+    	}
+  	}
+}
+function adminControl($scope, $http){
+	$http.get('php/backend.php?action=showAdmin').success(function(data) {
+		$scope.admins = data;
+	});
+	$scope.orderProp = 'adminID';
+
+	$scope.deleteAdmin = function(adminID) {
+		if(confirm("你真的要删除这个管理员吗？")){
+			var send;
+			send = 'php/backend.php?action=deleteAdmin&adminID=' + adminID;
+			
+			$http.get(send).success(function(data) {
+				if(data == 0){
+					alert('删除成功');
+				} else{
+					alert('删除失败');
+				}
+			});
+		}
+	}
+
+	$scope.editAdmin = function(adminID){
+		$.each($scope.admins, function(key, value) {
+			if((value['adminID'] == adminID)){
+				$scope.newAdmin = value;
+			}
+		});
+	}
+
+	$scope.updateAdmin = function(){
+		var send;
+
+		send='php/backend.php?action=updateAdmin&adminID=' + $scope.newAdmin.adminID  + '&loginName=' + $scope.newAdmin.loginName + '&password=' + $scope.newAdmin.password + '&name=' + $scope.newAdmin.name + '&phone=' + $scope.newAdmin.phone + '&privilege=' + $scope.newAdmin.privilege ;
+
+		$http.get(send).success(function(data) {
+			if(data == 0){
+				alert('更新管理员成功');
+			} else{
+				alert('更新管理员失败');
+			}
+		});
+	}
+}
+function adminCardControl($scope, $http){
+	$http.get('php/backend.php?action=showCard').success(function(data) {
+		$scope.cards = data;
+	});
+	$scope.orderProp = 'cardID';
+
+	$scope.editCard = function(CardID){
+		$.each($scope.cards, function(key, value) {
+			if((value['cardID'] == CardID)){
+				$scope.newCard = value;
+			}
+		});
+	}
+
+	$scope.updateCard = function(){
+		var send;
+
+		send='php/backend.php?action=updateCard&cardID=' + $scope.newCard.cardID  + '&name=' + $scope.newCard.name + '&department=' + $scope.newCard.department + '&privilege=' + $scope.newCard.privilege ;
+
+
+		$http.get(send).success(function(data) {
+			if(data == 0){
+				alert('更新借书证成功');
+			} else{
+				alert('更新借书证失败');
+			}
+		});
+	}
+
+	$scope.deleteCard = function(cardID) {
+		if(confirm("你真的要删除这张借书证吗？")){
+			var send;
+			send = 'php/backend.php?action=deleteCard&cardID=' + cardID;
+			
+			$http.get(send).success(function(data) {
+				if(data == 0){
+					alert('删除成功');
+				} else{
+					alert('删除失败');
+				}
+			});
+		}
+	}
 }

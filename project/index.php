@@ -14,13 +14,13 @@
 ?>
 
 <div id="actionRow">
-	<div id="query" class="actionButton" onclick="location.href='query.php'">图书查询</div>
-	<div id="borrow" class="actionButton">借书</div>
-	<div id="return" class="actionButton">还书</div>
+	<div id="book" class="actionButton" onclick="location.href='book.php'">查询图书信息</div>
+	<div id="card" class="actionButton" onclick="location.href='card.php'">查询借书证信息</div>
 </div>
 <div id="adminRow">
-	<div id="import" class="actionButton">图书入库</div>
-	<div id="admin" class="actionButton">人员管理</div>
+	<div id="import" class="actionButton" onclick="location.href='adminBook.php'">图书入库</div>
+	<div id="admin" class="actionButton" onclick="location.href='admin.php'">人员管理</div>
+	<div id="adminCard" class="actionButton" onclick="location.href='adminCard.php'">人员管理</div>
 </div>
 
 <?php
