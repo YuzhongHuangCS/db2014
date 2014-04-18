@@ -154,6 +154,12 @@
 			echo($conn->sqlstate);
 			break;
 
+		case 'deleteBook':
+			$sql = 'DELETE FROM `library`.`book` WHERE `book`.`bookID` = ' . $bookID;
+			$conn->query($sql);
+			echo($conn->sqlstate);
+			break;
+
 		case 'updateAdmin':
 			if($adminID){
 				if($password){

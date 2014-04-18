@@ -68,6 +68,7 @@
 			<th>当前库存</th>
 			<th>总藏书量</th>
 			<th>编辑</th>
+			<th>删除</th>
 		</tr>
     	<tr ng-repeat="book in books | filter:query | orderBy:orderProp">
     		<td>{{book.bookID}}</td>
@@ -80,6 +81,7 @@
 			<td>{{book.stock}}</td>
 			<td>{{book.total}}</td>
 			<td ng-click="editBook(book.bookID)">编辑</td>
+			<td ng-click="deleteBook(book.bookID)">删除</td>
 		</tr>
 	</table>
 </div>

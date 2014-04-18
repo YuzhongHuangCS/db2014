@@ -64,7 +64,7 @@ function BookListCtrl($scope, $http) {
 	$http.get('php/backend.php?action=showBook').success(function(data) {
 		$scope.books = data;
 	});
-	$scope.orderProp = 'title';
+	$scope.orderProp = 'bookID';
 
 	$scope.borrow = function(bookID) {
     	var send, cardID;
@@ -100,7 +100,7 @@ function cardControl($scope, $http) {
 	$http.get(send).success(function(data) {
 		$scope.borrows = data;
 	});
-	$scope.orderProp = 'title';
+	$scope.orderProp = 'bookID';
 
 	$scope.return = function(borrowID) {
     	var send;
@@ -155,7 +155,7 @@ function adminBookControl($scope, $http) {
 	$http.get('php/backend.php?action=showBook').success(function(data) {
 		$scope.books = data;
 	});
-	$scope.orderProp = 'title';
+	$scope.orderProp = 'bookID';
 
 	$scope.editBook = function(bookID){
 		$.each($scope.books, function(key, value) {
@@ -165,24 +165,20 @@ function adminBookControl($scope, $http) {
 		});
 	}
 
-
-	$scope.borrow = function(bookID) {
-    	var send, cardID;
-    	cardID = prompt("请输入借书证号");
-    	if ((cardID != null) && (cardID != "")){
-    		send = 'php/backend.php?action=borrow&bookID=' + bookID + '&cardID=' + cardID ;
-    		$http.get(send).success(function(data) {
-    			if(data > 0){
-    				alert('借书成功');
-    				$http.get('php/backend.php?action=showBook').success(function(data) {
-						$scope.books = data;
-					});
-    			} else{
-    				alert('借书失败');
-    			}
-    		})
-    	}
-  	}
+	$scope.deleteBook = function(bookID) {
+		if(confirm("你真的要删除这本书吗？")){
+			var send;
+			send = 'php/backend.php?action=deleteBook&bookID=' + bookID;
+			
+			$http.get(send).success(function(data) {
+				if(data == 0){
+					alert('删除成功');
+				} else{
+					alert('删除失败');
+				}
+			});
+		}
+	}
 }
 function adminControl($scope, $http){
 	$http.get('php/backend.php?action=showAdmin').success(function(data) {
