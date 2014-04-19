@@ -1,11 +1,11 @@
 body{background:url(../img/bg.jpg) no-repeat fixed;background-size:cover;overflow-x:hidden}
-nav{background-color:#000;opacity:.7;height:3.4rem}nav span{position:absolute;color:#fff;font-size:1.2rem;padding:1rem;transition:all .6s}nav span:hover{background-color:#666}
+nav{background-color:#000;opacity:.7;height:3.6rem}nav span{position:absolute;color:#fff;font-size:1.2rem;padding:1rem;transition:all .6s}nav span:hover{background-color:#666}
 nav #title{left:4rem}
 nav #login{right:2rem}
-#actionRow{margin:12% auto 0;width:80%}#actionRow .actionButton{display:inline-block;margin-left:10rem;padding:1rem;min-width:6.8rem;font-size:1.5rem;text-align:center;border-radius:.6rem;transition:all .6s}
-#actionRow #book{color:#76cc1e;border:2px solid #76cc1e}#actionRow #book:hover{color:#fff;background-color:#76cc1e}
+#actionRow{margin:15% auto 0;width:80%}#actionRow .actionButton{display:inline-block;margin-left:12rem;padding:1rem;min-width:6.8rem;font-size:1.5rem;text-align:center;border-radius:.6rem;transition:all .6s}
+#actionRow #book{color:#76cc1e;border:2px solid #76cc1e;margin-left:14rem}#actionRow #book:hover{color:#fff;background-color:#76cc1e}
 #actionRow #card{color:#f66b30;border:2px solid #f66b30}#actionRow #card:hover{color:#fff;background-color:#f66b30}
-#adminRow{margin:10% auto 0;width:80%}#adminRow .actionButton{display:inline-block;margin-left:10rem;padding:1rem;min-width:6.8rem;font-size:1.5rem;text-align:center;border-radius:.6rem;transition:all .6s}
+#adminRow{margin:8% auto 0;width:80%;display:none}#adminRow .actionButton{display:inline-block;margin-left:9rem;padding:1rem;min-width:6.8rem;font-size:1.5rem;text-align:center;border-radius:.6rem;transition:all .6s}
 #adminRow #import{color:#428bca;border:2px solid #428bca}#adminRow #import:hover{color:#fff;background-color:#428bca}
 #adminRow #admin{color:#f0ad4e;border:2px solid #f0ad4e}#adminRow #admin:hover{color:#fff;background-color:#f0ad4e}
 #adminRow #adminCard{color:#f66b30;border:2px solid #f0ad4e}#adminRow #adminCard:hover{color:#fff;background-color:#f0ad4e}
@@ -14,43 +14,25 @@ nav #login{right:2rem}
 #loginView #loginArea #loginButton{float:right;margin:-1.6rem 1rem 0 0;padding:.5rem 1.5rem;color:#76cc1e;font-size:1.2rem;border:2px solid #76cc1e;border-radius:.6rem;transition:all .6s;cursor:pointer}#loginView #loginArea #loginButton:hover{color:#fff;background-color:#76cc1e}
 #loginView #loginArea #cancelButton{float:left;margin:-1.6rem 0 0 1rem;padding:.5rem 1.5rem;color:#f66b30;font-size:1.2rem;border:2px solid #f66b30;border-radius:.6rem;transition:all .6s;cursor:pointer}#loginView #loginArea #cancelButton:hover{color:#fff;background-color:#f66b30}
 #filter{position:fixed;top:0;width:100%;height:100%;background-color:#000;opacity:.8;z-index:-10}
-#book #controlBar{margin:3rem auto 0;text-align:center;font-size:1.2rem;color:#fff}
-#book #search{display:inline-block}
-#book #sort{display:inline-block}
-#book input{color:#000}
-#book select{color:#000}
-#book table{margin:3rem auto;width:80%;color:#333;border-width:1px;border-color:#666;border-collapse:collapse}#book table th{border-width:1px;padding:8px;border-style:solid;border-color:#666;background-color:#dedede}
-#book table td{border-width:1px;padding:1rem 2rem;border-style:solid;border-color:#666;background-color:#fff}
-#card #cardInfo{display:none;color:#fff;text-align:center;margin-top:2rem}
-#card #controlBar{margin:3rem auto 0;text-align:center;font-size:1.2rem;color:#fff}
-#card #search{display:inline-block}
-#card #sort{display:inline-block}
-#card input{color:#000}
-#card select{color:#000}
-#card table{margin:3rem auto;width:90%;color:#333;border-width:1px;border-color:#666;border-collapse:collapse}#card table th{border-width:1px;padding:1rem;border-style:solid;border-color:#666;background-color:#dedede}
-#card table td{border-width:1px;padding:1rem;border-style:solid;border-color:#666;background-color:#fff}
+table{margin:3rem auto;width:90%;color:#333;border-collapse:collapse;box-shadow:0 0 .8rem rgba(255,255,255,0.6)}table tr{transition:all .2s}
+table tr:nth-child(odd){background-color:#fff}
+table tr:nth-child(even){background-color:#e8edff}
+table tr:hover{background-color:#d0dafd}
+table th{border:1px solid #ccc;background-color:#eee;padding:1rem}
+table td{border:0;padding:1rem}
+input{color:#000;padding:.25rem 1rem}
+select{color:#000;padding:.25rem 1rem}select option{padding:.25rem 1rem}
+#controlBar{margin:3rem auto 0;text-align:center;font-size:1.2rem;color:#fff}
+#search{display:inline-block}
+#sort{display:inline-block}
+#card #cardInfo{display:none;margin:2rem auto 0;padding:1rem;text-align:center;width:48rem;color:#333;background-color:#fff;border-radius:.5rem;box-shadow:0 0 1rem #333 inset}#card #cardInfo ul{margin:0;list-style:none}#card #cardInfo ul li{display:inline;margin-right:2rem;font-size:1.2rem}
 #adminBook #cardInfo{display:none;color:#fff;text-align:center;margin-top:2rem}
-#adminBook #controlBar{margin:3rem auto 0;text-align:center;font-size:1.2rem;color:#fff}
-#adminBook #search{display:inline-block}
-#adminBook #sort{display:inline-block}
 #adminBook label{color:#fff}
 #adminBook form{color:#000}
 #adminBook select{color:#000}
-#adminBook table{margin:3rem auto;width:90%;color:#333;border-width:1px;border-color:#666;border-collapse:collapse}#adminBook table th{border-width:1px;padding:1rem;border-style:solid;border-color:#666;background-color:#dedede}
-#adminBook table td{border-width:1px;padding:1rem;border-style:solid;border-color:#666;background-color:#fff}
 #admin #cardInfo{display:none;color:#fff;text-align:center;margin-top:2rem}
-#admin #controlBar{margin:3rem auto 0;text-align:center;font-size:1.2rem;color:#fff}
-#admin #search{display:inline-block}
-#admin #sort{display:inline-block}
 #admin input{color:#000}
 #admin select{color:#000}
-#admin table{margin:3rem auto;width:90%;color:#333;border-width:1px;border-color:#666;border-collapse:collapse}#admin table th{border-width:1px;padding:1rem;border-style:solid;border-color:#666;background-color:#dedede}
-#admin table td{border-width:1px;padding:1rem;border-style:solid;border-color:#666;background-color:#fff}
-#adminCard #cardInfo{display:none;color:#fff;text-align:center;margin-top:2rem}
-#adminCard #controlBar{margin:3rem auto 0;text-align:center;font-size:1.2rem;color:#fff}
-#adminCard #search{display:inline-block}
-#adminCard #sort{display:inline-block}
+#adminCard #cardInfo{display:none;color:#333;background-color:#fff;text-align:center;margin-top:2rem}
 #adminCard input{color:#000}
 #adminCard select{color:#000}
-#adminCard table{margin:3rem auto;width:90%;color:#333;border-width:1px;border-color:#666;border-collapse:collapse}#adminCard table th{border-width:1px;padding:1rem;border-style:solid;border-color:#666;background-color:#dedede}
-#adminCard table td{border-width:1px;padding:1rem;border-style:solid;border-color:#666;background-color:#fff}

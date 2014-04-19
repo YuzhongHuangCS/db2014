@@ -18,7 +18,7 @@
 
 		<form ng-model="newAdmin">
 			<input type="text" ng-model="newAdmin.loginName" placeholder="用户名，如更改必须同时输入密码" />
-			<input type="text" ng-model="newAdmin.password" placeholder="密码，留空不更改" />
+			<input type="password" ng-model="newAdmin.password" placeholder="密码，留空不更改" />
 			<input type="text" ng-model="newAdmin.name" placeholder="姓名" />
 			<input type="text" ng-model="newAdmin.phone" placeholder="手机号" />
 			<input type="text" ng-model="newAdmin.privilege" placeholder="权限" />

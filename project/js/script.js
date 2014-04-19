@@ -10,8 +10,10 @@ $(document).ready(function(){
 			$('#login').addClass('unlogin');
 			$('#login').removeClass('logined');
 			checkLogin();
+			window.location.reload();
 		}
 	});
+
 	$('#loginButton').click(function(){
 		var loginName = $('[name="loginName"]').val();
 		var password = $('[name="password"]').val();
@@ -32,6 +34,9 @@ $(document).ready(function(){
 					$('#tip').fadeIn('400', function() {
 						setTimeout(function(){
 							$('#loginView').css({"left":"100%", "opacity": "0"});
+							setTimeout(function(){
+								window.location.reload();
+							}, 600);
 						}, 400);
 					});
 				});;
@@ -53,14 +58,16 @@ function checkLogin(){
 		$('#login').text($.cookie('name'));
 		$('#login').removeClass('unlogin');
 		$('#login').addClass('logined');
+		$('#adminRow').fadeIn();
 	} else{
 		$('#login').text('注册 / 登录');
 		$('#login').removeClass('logined');
 		$('#login').addClass('unlogin');
+		$('#adminRow').fadeOut();
 	}
 }
 
-function BookListCtrl($scope, $http) {
+function bookControl($scope, $http) {
 	$http.get('php/backend.php?action=showBook').success(function(data) {
 		$scope.books = data;
 	});
@@ -68,56 +75,70 @@ function BookListCtrl($scope, $http) {
 
 	$scope.borrow = function(bookID) {
     	var send, cardID;
-    	cardID = prompt("请输入借书证号");
-    	if ((cardID != null) && (cardID != "")){
-    		send = 'php/backend.php?action=borrow&bookID=' + bookID + '&cardID=' + cardID ;
-    		$http.get(send).success(function(data) {
-    			if(data > 0){
-    				alert('借书成功');
-    				$http.get('php/backend.php?action=showBook').success(function(data) {
-						$scope.books = data;
-					});
-    			} else{
-    				alert('借书失败');
-    			}
-    		})
+		if($.cookie('privilege') >= 10){
+    		cardID = prompt("请输入借书证号");
+    		if ((cardID != null) && (cardID != "")){
+    			send = 'php/backend.php?action=borrow&bookID=' + bookID + '&cardID=' + cardID ;
+    			$http.get(send).success(function(data) {
+    				if(data > 0){
+    					alert('借书成功');
+    					$http.get('php/backend.php?action=showBook').success(function(data) {
+							$scope.books = data;
+						});
+    				} else{
+    					alert('借书失败');
+    				}
+    			})
+    		}
+    	} else{
+    		alert('值班员尚未登录');
     	}
   	}
 }
 function cardControl($scope, $http) {
 	var send, cardID;
-	window.cardID = cardID = prompt("请输入借书证号");
+	if($.cookie('privilege') >= 10){
+		window.cardID = cardID = prompt("请输入借书证号");
 
-	if ((cardID != null) && (cardID != "")){
-		send = 'php/backend.php?action=showCardInfo&cardID=' + cardID;
+		if ((cardID != null) && (cardID != "")){
+			send = 'php/backend.php?action=showCardInfo&cardID=' + cardID;
+			$http.get(send).success(function(data) {
+				console.log(data.length);
+				if((data.length) > 0){
+					$scope.cardInfo = data;
+					$('#cardInfo').slideDown();
+				} else{
+					alert('该借书卡不存在');
+				}
+			});
+		};
+
+		send = 'php/backend.php?action=showBorrow&cardID=' + cardID;
 		$http.get(send).success(function(data) {
-			$scope.cardInfo = data;
-			$('#cardInfo').slideDown();
+			$scope.borrows = data;
 		});
-	};
+		$scope.orderProp = 'bookID';
 
-	send = 'php/backend.php?action=showBorrow&cardID=' + cardID;
-	$http.get(send).success(function(data) {
-		$scope.borrows = data;
-	});
-	$scope.orderProp = 'bookID';
+		$scope.return = function(borrowID) {
+    		var send;
 
-	$scope.return = function(borrowID) {
-    	var send;
+    		send = 'php/backend.php?action=return&borrowID=' + borrowID;
+    		$http.get(send).success(function(data) {
+    			if(data == 0){
+    				alert('还书成功');
+    				send = 'php/backend.php?action=showBorrow&cardID=' + cardID;
+    				$http.get(send).success(function(data) {
+						$scope.borrows = data;
+					});
+    			} else{
+    				alert('还书失败');
+    			}
+    		})
+  		}
+	} else{
+		alert('值班员尚未登录');
+	}
 
-    	send = 'php/backend.php?action=return&borrowID=' + borrowID;
-    	$http.get(send).success(function(data) {
-    		if(data == 0){
-    			alert('还书成功');
-    			send = 'php/backend.php?action=showBorrow&cardID=' + cardID;
-    			$http.get(send).success(function(data) {
-					$scope.borrows = data;
-				});
-    		} else{
-    			alert('还书失败');
-    		}
-    	})
-  	}
 }
 
 function adminBookControl($scope, $http) {
@@ -173,6 +194,9 @@ function adminBookControl($scope, $http) {
 			$http.get(send).success(function(data) {
 				if(data == 0){
 					alert('删除成功');
+						$http.get('php/backend.php?action=showBook').success(function(data) {
+						$scope.books = data;
+					});
 				} else{
 					alert('删除失败');
 				}

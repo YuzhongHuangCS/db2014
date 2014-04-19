@@ -14,29 +14,32 @@
 	require('php/nav.php');
 ?>
 <div id="card" ng-app ng-controller="cardControl">
-	<div id="cardInfo">
-		<div ng-model="cardInfo">
-			<span>卡号: {{cardInfo[0].cardID}} 姓名: {{cardInfo[0].name}} 院系: {{cardInfo[0].department}} 权限: {{cardInfo[0].privilege}}</span>
-		</div>
+	<div id="cardInfo" ng-model="cardInfo">
+		<ul>
+			<li>卡号: {{cardInfo[0].cardID}}</li>
+			<li>姓名: {{cardInfo[0].name}}</li>
+			<li>院系: {{cardInfo[0].department}}</li>
+			<li>权限: {{cardInfo[0].privilege}}</li>
+		</ul>
 	</div>
 	<div id="controlBar">
-		<div id="search">Search: <input ng-model="query"></div>
+		<div id="search">搜索: <input ng-model="query" placeholder="快速过滤"></div>
 		<div id="sort">
-			Sort by:
+			排序：
 			<select ng-model="orderProp">
-    			<option value="bookID">bookID</option>
-    			<option value="borrowID">borrowID</option>
-				<option value="title">title</option>
-				<option value="author">author</option>
-				<option value="categoryName">categoryName</option>
-				<option value="press">press</option>
-				<option value="price">price</option>
-				<option value="year">year</option>
-				<option value="stock">stock</option>
-				<option value="total">total</option>
-				<option value="name">name</option>
-				<option value="borrow_date">borrow_date</option>
-				<option value="return_date">return_date</option>
+    			<option value="bookID">书号</option>
+    			<option value="borrowID">借书号</option>
+				<option value="title">书名</option>
+				<option value="author">作者</option>
+				<option value="categoryName">分类</option>
+				<option value="press">出版社</option>
+				<option value="price">价格</option>
+				<option value="year">年份</option>
+				<option value="stock">库存</option>
+				<option value="total">总量</option>
+				<option value="name">经手人</option>
+				<option value="borrow_date">借书日期</option>
+				<option value="return_date">还书日期</option>
 			</select>
 		</div>
 	</div>
@@ -46,7 +49,7 @@
 			<th>借书号</th>
 			<th>书名</th>
 			<th>作者</th>
-			<th>类别</th>
+			<th>分类</th>
 			<th>出版社</th>
 			<th>价格</th>
 			<th>年份</th>
@@ -71,7 +74,7 @@
 			<td>{{borrow.name}}</td>
 			<td>{{borrow.borrow_date}}</td>
 			<td>{{borrow.return_date}}</td>
-			<td ng-click="return(borrow.borrowID)">还书</td>
+			<td ng-click="return(borrow.borrowID)"><button ng-if="!borrow.return_date">还书</button></td>
 		</tr>
 	</table>
 </div>

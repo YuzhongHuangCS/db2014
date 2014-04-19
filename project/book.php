@@ -13,21 +13,21 @@
 <?php
 	require('php/nav.php');
 ?>
-<div id="book" ng-app ng-controller="BookListCtrl">
+<div id="book" ng-app ng-controller="bookControl">
 	<div id="controlBar">
-		<div id="search">Search: <input ng-model="query"></div>
+		<div id="search">搜索：<input ng-model="query" placeholder="快速过滤"></div>
 		<div id="sort">
-			Sort by:
+			排序：
 			<select ng-model="orderProp">
-				<option value="bookID">bookID</option>
-  				<option value="title">title</option>
-  				<option value="categoryName">category</option>
-  				<option value="author">author</option>
-  				<option value="press">press</option>
-  				<option value="year">year</option>
-  				<option value="year">price</option>
-  				<option value="stock">stock</option>
-  				<option value="total">total</option>
+				<option value="bookID">书号</option>
+  				<option value="title">书名</option>
+  				<option value="categoryName">分类</option>
+  				<option value="author">作者</option>
+  				<option value="press">出版社</option>
+  				<option value="year">年份</option>
+  				<option value="year">价格</option>
+  				<option value="stock">库存</option>
+  				<option value="total">总量</option>
 			</select>
 		</div>
 	</div>
@@ -54,7 +54,7 @@
 			<td>{{book.price}}</td>
 			<td>{{book.stock}}</td>
 			<td>{{book.total}}</td>
-			<td ng-click="borrow(book.bookID)">借书</td>
+			<td ng-click="borrow(book.bookID)"><button ng-if="book.stock">借书</button></td>
 		</tr>
 	</table>
 </div>

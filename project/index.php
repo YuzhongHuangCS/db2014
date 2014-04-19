@@ -20,7 +20,7 @@
 <div id="adminRow">
 	<div id="import" class="actionButton" onclick="location.href='adminBook.php'">图书入库</div>
 	<div id="admin" class="actionButton" onclick="location.href='admin.php'">人员管理</div>
-	<div id="adminCard" class="actionButton" onclick="location.href='adminCard.php'">人员管理</div>
+	<div id="adminCard" class="actionButton" onclick="location.href='adminCard.php'">借书证管理</div>
 </div>
 
 <?php
