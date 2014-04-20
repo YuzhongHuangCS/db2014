@@ -14,30 +14,39 @@
 	require('php/nav.php');
 ?>
 <div id="adminBook" ng-app ng-controller="adminBookControl">
-	<div id="addBar">
-		<form>
-			<input type="text" ng-model="newCategory" placeholder="新分类" />
-			<input type="submit" value="提交" ng-click="addCategory()"/>
-		</form>
-		<form action="php/fileUpload.php" method="post" enctype="multipart/form-data">
-			<label for="file">Filename:</label> <br />
-			<input type="file" name="file" id="file" /> 
-			<br />
-			<input type="submit" name="submit" value="Submit" />
-		</form>
-		<form ng-model="newBook">
-			<input type="text" ng-model="newBook.title" placeholder="书名" />
-			<select ng-model="newBook.categoryID">
-				<option ng-repeat="category in categories" value={{category.categoryID}}>{{category.categoryName}}</option>
-			</select>
-			<input type="text" ng-model="newBook.author" placeholder="作者" />
-			<input type="text" ng-model="newBook.press" placeholder="出版社" />
-			<input type="text" ng-model="newBook.year" placeholder="年份" />
-			<input type="text" ng-model="newBook.price" placeholder="价格" />
-			<input type="text" ng-model="newBook.stock" placeholder="库存" />
-			<input type="text" ng-model="newBook.total" placeholder="总数" />
-			<input type="submit" value="提交" ng-click="updateBook()"/>
-		</form>
+	<div id="updateBar">
+		<div id="newCategory">
+			<span>添加新分类:</span> 
+			<form>
+				<input type="text" ng-model="newCategory" placeholder="新分类" />
+				<input type="submit" value="提交" ng-click="addCategory()"/>
+			</form>
+		</div>
+		<div id="editArea">
+			<span>添加/编辑图书：</span>
+			<form ng-model="newBook">
+				<span>分类：</span>
+				<select ng-model="newBook.categoryID">
+					<option ng-repeat="category in categories" value={{category.categoryID}}>{{category.categoryName}}</option>
+				</select>
+				<input type="text" ng-model="newBook.title" placeholder="书名" />
+				<input type="text" ng-model="newBook.author" placeholder="作者" />
+				<input type="text" ng-model="newBook.press" placeholder="出版社" />
+				<input type="text" ng-model="newBook.year" placeholder="年份" />
+				<input type="text" ng-model="newBook.price" placeholder="价格" />
+				<input type="text" ng-model="newBook.stock" placeholder="库存" />
+				<input type="text" ng-model="newBook.total" placeholder="总数" />
+				<input type="submit" value="提交" ng-click="updateBook()"/>
+			</form>
+		</div>
+
+		<div id="massAdd">
+			<span>批量添加:</span>
+			<form action="php/fileUpload.php" method="post" enctype="multipart/form-data">
+				<input type="file" name="file" id="file"/> 
+				<input type="submit" name="submit" value="上传" />
+			</form>
+		</div>
 	</div>
 	<div id="controlBar">
 		<div id="search">Search: <input ng-model="query"></div>
@@ -80,8 +89,8 @@
 			<td>{{book.price}}</td>
 			<td>{{book.stock}}</td>
 			<td>{{book.total}}</td>
-			<td ng-click="editBook(book.bookID)">编辑</td>
-			<td ng-click="deleteBook(book.bookID)">删除</td>
+			<td ng-click="editBook(book.bookID)"><button>编辑</button></td>
+			<td ng-click="deleteBook(book.bookID)"><button>删除</button></td>
 		</tr>
 	</table>
 </div>

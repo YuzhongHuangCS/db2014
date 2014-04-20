@@ -15,6 +15,7 @@
 ?>
 <div id="adminCard" ng-app ng-controller="adminCardControl">
 	<div id="updateBar">
+		<span>编辑借书证信息:</span>
 		<form ng-model="newCard">
 			<input type="text" ng-model="newCard.name" placeholder="姓名" />
 			<input type="text" ng-model="newCard.department" placeholder="院系" />
@@ -48,8 +49,8 @@
 			<td>{{card.name}}</td>	
 			<td>{{card.department}}</td>
 			<td>{{card.privilege}}</td>
-			<td ng-click="editCard(card.cardID)">编辑</td>
-			<td ng-click="deleteCard(card.cardID)">删除</td>
+			<td ng-click="editCard(card.cardID)"><button>编辑</button></td>
+			<td ng-click="deleteCard(card.cardID)"><button>删除</button></td>
 		</tr>
 	</table>
 </div>

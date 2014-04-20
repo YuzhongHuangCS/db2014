@@ -1,5 +1,19 @@
 $(document).ready(function(){
+
 	checkLogin();
+
+	var navElement = document.querySelector("nav");
+	var headroom = new Headroom(navElement, {
+  		"tolerance": 5,
+  		"offset": 205,
+ 		"classes": {
+  		 	"initial": "animated",
+    		"pinned": "slideInDown",
+    		"unpinned": "slideOutUp"
+  		}
+	});
+	headroom.init();
+
 	$('.unlogin').click(function(){
 		$('#loginView').css({"left":"0", "opacity": "0.9"});	
 	});
@@ -184,6 +198,7 @@ function adminBookControl($scope, $http) {
 				$scope.newBook = value;
 			}
 		});
+		$('html,body').animate({scrollTop: 0});
 	}
 
 	$scope.deleteBook = function(bookID) {
@@ -204,7 +219,7 @@ function adminBookControl($scope, $http) {
 		}
 	}
 }
-function adminControl($scope, $http){
+function adminStaffControl($scope, $http){
 	$http.get('php/backend.php?action=showAdmin').success(function(data) {
 		$scope.admins = data;
 	});
@@ -231,6 +246,8 @@ function adminControl($scope, $http){
 				$scope.newAdmin = value;
 			}
 		});
+		$('#loginName').attr('disabled', 'disabled');
+		$('html,body').animate({scrollTop: 0});
 	}
 
 	$scope.updateAdmin = function(){
@@ -259,6 +276,7 @@ function adminCardControl($scope, $http){
 				$scope.newCard = value;
 			}
 		});
+		$('html,body').animate({scrollTop: 0});
 	}
 
 	$scope.updateCard = function(){

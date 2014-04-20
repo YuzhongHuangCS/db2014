@@ -15,10 +15,13 @@ body{
 }
 nav{
 	background-color: #000;
-	opacity: 0.7;
-	height: 3.6rem;
+	width: 100%;
+	top: 0;
+	height: 3.4rem;
+	opacity: 0.8;
+	position: fixed;
 	span{
-		position: absolute;
+		position: fixed;
 		color: #FFF;
 		font-size: 1.2rem;
 		padding: 1rem;
@@ -57,11 +60,11 @@ nav{
 		}
 	}
 	#card{
-		color: @orange;
-		border: 2px solid @orange;
+		color: @yellow;
+		border: 2px solid @yellow;
 		&:hover{
 			color: #FFF;
-			background-color: @orange;
+			background-color: @yellow;
 		}
 	}
 }
@@ -214,18 +217,31 @@ table{
 	}
 }
 input{
+	margin: 0.5rem 0;
+	padding: 0.5rem 1rem;
 	color: #000;
-	padding: 0.25rem 1rem;
+	border: 0;
+	border-radius: 0.3rem;
 }
 select{
 	color: #000;
-	padding: 0.25rem 1rem;
+	border-radius: 0.3rem;
+	padding: 0.5rem 1rem;
 	option{
-		padding: 0.25rem 1rem;
+		border-radius: 0.3rem;
+	}
+}
+#updateBar{
+	margin: 4rem auto 0;
+	width: 90%;
+	color: @blue;
+	form{
+		display: inline-block;
+		margin-left: 2rem;
 	}
 }
 #controlBar{
-	margin: 3rem auto 0;
+	margin: 4rem auto 0;
 	text-align: center;
 	font-size: 1.2rem;
 	color: #FFF;
@@ -234,20 +250,20 @@ select{
 	display: inline-block;
 }
 #sort{
+	margin-left: 1rem;
 	display: inline-block;
 }
-
 #card{
 	#cardInfo{
 		display: none;
-		margin: 2rem auto 0;
+		margin: 6rem auto 0;
 		padding: 1rem;
 		text-align: center;
 		width: 48rem;
 		color: #333;
-		background-color: #FFF;
+		background-color: #EEE;
 		border-radius: 0.5rem;
-		box-shadow: 0 0 1rem #333 inset;
+		box-shadow: 0 0 1rem #FFF;
 		ul{
 			margin: 0;
 			list-style: none;
@@ -260,48 +276,23 @@ select{
 	}
 }
 #adminBook{
-	#cardInfo{
-		display: none;
-		color: #FFF;
-		text-align: center;
-		margin-top: 2rem;
-	}
-	label{
-		color: #FFF;
-	}
-	form{
-		color: #000;
-	}
-	select{
-		color: #000;
+	#updateBar{
+		#editArea{
+			form{
+				span{
+					color: #FFF;
+				}
+			}
+		}
+		#massAdd{
+			#file{
+				color: #FFF;
+			}
+		}
 	}
 }
-#admin{
-	#cardInfo{
-		display: none;
-		color: #FFF;
-		text-align: center;
-		margin-top: 2rem;
-	}
-	input{
-		color: #000;
-	}
-	select{
-		color: #000;
-	}
+#adminStaff{
+
 }
 #adminCard{
-	#cardInfo{
-		display: none;
-		color: #333;
-		background-color: #FFF;
-		text-align: center;
-		margin-top: 2rem;
-	}
-	input{
-		color: #000;
-	}
-	select{
-		color: #000;
-	}
 }

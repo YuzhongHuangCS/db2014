@@ -13,11 +13,11 @@
 <?php
 	require('php/nav.php');
 ?>
-<div id="admin" ng-app ng-controller="adminControl">
+<div id="adminStaff" ng-app ng-controller="adminStaffControl">
 	<div id="updateBar">
-
+		<span>编辑管理员信息:</span>
 		<form ng-model="newAdmin">
-			<input type="text" ng-model="newAdmin.loginName" placeholder="用户名，如更改必须同时输入密码" />
+			<input type="text" ng-model="newAdmin.loginName"  id="loginName" placeholder="用户名，注册后不能修改" />
 			<input type="password" ng-model="newAdmin.password" placeholder="密码，留空不更改" />
 			<input type="text" ng-model="newAdmin.name" placeholder="姓名" />
 			<input type="text" ng-model="newAdmin.phone" placeholder="手机号" />
@@ -54,8 +54,8 @@
 			<td>{{admin.name}}</td>	
 			<td>{{admin.phone}}</td>
 			<td>{{admin.privilege}}</td>
-			<td ng-click="editAdmin(admin.adminID)">编辑</td>
-			<td ng-click="deleteAdmin(admin.adminID)">删除</td>
+			<td ng-click="editAdmin(admin.adminID)"><button>编辑</button></td>
+			<td ng-click="deleteAdmin(admin.adminID)"><button>删除</button></td>
 		</tr>
 	</table>
 </div>
