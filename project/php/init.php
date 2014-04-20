@@ -1,5 +1,5 @@
 <?php
-	$conn = new mysqli('localhost', 'www-data', '', 'library');
+	$conn = new mysqli('localhost', 'www-data', '', 'db2014');
 	
 	if($conn->connect_error) {
 		die('Database connection failed: ' . $conn->connect_error);

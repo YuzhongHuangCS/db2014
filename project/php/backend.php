@@ -22,6 +22,16 @@
 	$privilege = filter_input(INPUT_GET, 'privilege', FILTER_SANITIZE_NUMBER_INT);
 	$department = filter_input(INPUT_GET, 'department', FILTER_SANITIZE_STRING);
 	
+	function checkPrivilege($expect){
+		session_id($_COOKIE['PHPSESSID']);
+		session_start();
+		if($_SESSION['privilege'] < $expect){
+			die('No enough privilege');
+		} else{
+			return 1;
+		}
+	};
+
 	switch($action){
 		case 'showCategory':
 			$sql = 'SELECT categoryID, categoryName FROM categories';
@@ -56,6 +66,8 @@
 			break;
 		
 		case 'showCardInfo':
+			checkPrivilege(10);
+
 			$sql = 'SELECT cardID, name, department, privilege FROM card WHERE cardID = ' . $cardID;
 			$result = $conn->query($sql);
 			$row = array();
@@ -72,6 +84,8 @@
 			break;
 
 		case 'showCard':
+			checkPrivilege(60);
+			
 			$sql = 'SELECT cardID, name, department, privilege FROM card';
 			$result = $conn->query($sql);
 			$row = array();
@@ -88,6 +102,8 @@
 			break;
 
 		case 'showAdmin':
+			checkPrivilege(100);
+
 			$sql = 'SELECT adminID, loginName, name, phone, privilege FROM admin';
 			$result = $conn->query($sql);
 			$row = array();
@@ -104,6 +120,8 @@
 			break;
 
 		case 'showBorrow':
+			checkPrivilege(10);
+
 			$sql = 'SELECT book.bookID, borrow.borrowID, book.title, book.author, categories.categoryName, book.press, book.price, book.year, book.stock, book.total, admin.name, borrow.borrow_date, borrow.return_date';
 			$sql .= 	' FROM borrow ';
 			$sql .= 	' JOIN admin ON borrow.adminID = admin.adminID AND borrow.cardID =' . $cardID;
@@ -125,78 +143,94 @@
 			break;
 
 		case 'borrow':
-			session_id($_COOKIE['PHPSESSID']);
-			session_start();
+			checkPrivilege(10);
+
 			$sql = 'INSERT INTO `borrow` (`borrowID`, `bookID`, `cardID`, `adminID`, `borrow_date`, `return_date`) VALUES (NULL, ' . $bookID . ', ' . $cardID . ', ' . $_SESSION['adminID'] .', CURRENT_TIMESTAMP, NULL)';
 			$conn->query($sql);
 			echo($conn->insert_id);
 			break;
 
 		case 'return':
+			checkPrivilege(10);
+
 			$sql = 'UPDATE `borrow` SET `return_date` = CURRENT_TIMESTAMP WHERE `borrowID` = ' . $borrowID;
 			$conn->query($sql);
 			echo($conn->sqlstate);
 			break;
 
 		case 'addCategory':
-			$sql = 'INSERT INTO `library`.`categories` (`categoryID`, `categoryName`) VALUES (NULL, "' . $categoryName . '")';
+			checkPrivilege(60);
+
+			$sql = 'INSERT INTO `categories` (`categoryID`, `categoryName`) VALUES (NULL, "' . $categoryName . '")';
 			$conn->query($sql);
 			echo($conn->sqlstate);
 			break;
 
 		case 'updateBook':
+			checkPrivilege(60);
+
 			if($bookID){
-				$sql = 'UPDATE `library`.`book` SET `categoryID` = ' . $categoryID . ', `title` = "' . $title . '" , `press` = "' . $press . '" , `year`=' . $year . ', `author` = "' . $author . '" , `price`= ' . $price . ', `stock`= ' . $stock . ', `total`=' . $total . ' WHERE `book`.`bookID` = ' . $bookID;
+				$sql = 'UPDATE `book` SET `categoryID` = ' . $categoryID . ', `title` = "' . $title . '" , `press` = "' . $press . '" , `year`=' . $year . ', `author` = "' . $author . '" , `price`= ' . $price . ', `stock`= ' . $stock . ', `total`=' . $total . ' WHERE `book`.`bookID` = ' . $bookID;
 			} else{
-				$sql = 'INSERT INTO `library`.`book` (`bookID`, `categoryID`, `title`, `press`, `year`, `author`, `price`, `stock`, `total`) VALUES (NULL, ' . $categoryID . ', "' . $title. '", "' . $press. '", '. $year . ', "'. $author . '", '. $price . ', ' . $stock . ', '. $total . ')';
+				$sql = 'INSERT INTO `book` (`bookID`, `categoryID`, `title`, `press`, `year`, `author`, `price`, `stock`, `total`) VALUES (NULL, ' . $categoryID . ', "' . $title. '", "' . $press. '", '. $year . ', "'. $author . '", '. $price . ', ' . $stock . ', '. $total . ')';
 			}
 			$conn->query($sql);
 			echo($conn->sqlstate);
 			break;
 
 		case 'deleteBook':
-			$sql = 'DELETE FROM `library`.`book` WHERE `book`.`bookID` = ' . $bookID;
+			checkPrivilege(60);
+
+			$sql = 'DELETE FROM `book` WHERE `book`.`bookID` = ' . $bookID;
 			$conn->query($sql);
 			echo($conn->sqlstate);
 			break;
 
 		case 'updateAdmin':
+			checkPrivilege(100);
+
 			if($adminID){
 				if($password){
 					$md5 = md5($loginName . $adminID . $adminID . $password);
-					$sql = 'UPDATE `library`.`admin` SET `loginName` = "' . $loginName . '", `password` = "' . $md5 . '", `name` = "' . $name . '" , `phone` = "' . $phone . '" , `privilege`= ' . $privilege . ' WHERE `admin`.`adminID` = ' . $adminID ;
+					$sql = 'UPDATE `admin` SET `loginName` = "' . $loginName . '", `password` = "' . $md5 . '", `name` = "' . $name . '" , `phone` = "' . $phone . '" , `privilege`= ' . $privilege . ' WHERE `admin`.`adminID` = ' . $adminID ;
 				}else{
-					$sql = 'UPDATE `library`.`admin` SET `loginName` = "' . $loginName . '", `name` = "' . $name . '" , `phone` = "' . $phone . '" , `privilege`= ' . $privilege . ' WHERE `admin`.`adminID` = ' . $adminID ;
+					$sql = 'UPDATE `admin` SET `loginName` = "' . $loginName . '", `name` = "' . $name . '" , `phone` = "' . $phone . '" , `privilege`= ' . $privilege . ' WHERE `admin`.`adminID` = ' . $adminID ;
 				}
 			} else{
-				$sql = 'INSERT INTO `library`.`admin` (`adminID`, `loginName`, `password`, `name`, `phone`, `privilege`) VALUES (NULL, "' . $loginName . '", "' . $password . '", "' . $name . '", "' . $phone . '", ' . $privilege . ')';
+				$sql = 'INSERT INTO `admin` (`adminID`, `loginName`, `password`, `name`, `phone`, `privilege`) VALUES (NULL, "' . $loginName . '", "' . $password . '", "' . $name . '", "' . $phone . '", ' . $privilege . ')';
 				$conn->query($sql);
 				$adminID = $conn->insert_id;
 				$md5 = md5($loginName . $adminID . $adminID . $password);
-				$sql = 'UPDATE `library`.`admin` SET `password` = "' . $md5 . '" WHERE `admin`.`password` = "' . $password . '"';
+				$sql = 'UPDATE `admin` SET `password` = "' . $md5 . '" WHERE `admin`.`password` = "' . $password . '"';
 			}
 			$conn->query($sql);
 			echo($conn->sqlstate);
 			break;
 
 		case 'deleteAdmin':
-			$sql = 'DELETE FROM `library`.`admin` WHERE `admin`.`adminID` = ' . $adminID;
+			checkPrivilege(100);
+
+			$sql = 'DELETE FROM `admin` WHERE `admin`.`adminID` = ' . $adminID;
 			$conn->query($sql);
 			echo($conn->sqlstate);
 			break;
 		
 		case 'updateCard':
+			checkPrivilege(60);
+
 			if($cardID){
-					$sql = 'UPDATE `library`.`card` SET `name` = "' . $name . '", `department` = "' . $department . '" , `privilege`= ' . $privilege . ' WHERE `card`.`cardID` = ' . $cardID ;
+					$sql = 'UPDATE `card` SET `name` = "' . $name . '", `department` = "' . $department . '" , `privilege`= ' . $privilege . ' WHERE `card`.`cardID` = ' . $cardID ;
 			} else{
-				$sql = 'INSERT INTO `library`.`card` (`cardID`, `name`, `department`, `privilege`) VALUES (NULL, "' . $name . '", "' . $department . '", ' . $privilege . ')';
+				$sql = 'INSERT INTO `card` (`cardID`, `name`, `department`, `privilege`) VALUES (NULL, "' . $name . '", "' . $department . '", ' . $privilege . ')';
 			}
 			$conn->query($sql);
 			echo($conn->sqlstate);
 			break;
 
 		case 'deleteCard':
-			$sql = 'DELETE FROM `library`.`card` WHERE `card`.`cardID` = ' . $cardID;
+			checkPrivilege(60);
+
+			$sql = 'DELETE FROM `card` WHERE `card`.`cardID` = ' . $cardID;
 			$conn->query($sql);
 			echo($conn->sqlstate);
 			break;

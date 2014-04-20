@@ -88,74 +88,84 @@ function bookControl($scope, $http) {
 	$scope.orderProp = 'bookID';
 
 	$scope.borrow = function(bookID) {
+
+		if(!($.cookie('privilege') >= 10)){
+			alert('值班员尚未登录');
+			return;
+		}
+
     	var send, cardID;
-		if($.cookie('privilege') >= 10){
-    		cardID = prompt("请输入借书证号");
-    		if ((cardID != null) && (cardID != "")){
-    			send = 'php/backend.php?action=borrow&bookID=' + bookID + '&cardID=' + cardID ;
-    			$http.get(send).success(function(data) {
-    				if(data > 0){
-    					alert('借书成功');
-    					$http.get('php/backend.php?action=showBook').success(function(data) {
-							$scope.books = data;
-						});
-    				} else{
-    					alert('借书失败');
-    				}
-    			})
-    		}
-    	} else{
-    		alert('值班员尚未登录');
+    	cardID = prompt("请输入借书证号");
+    	
+		if ((cardID != null) && (cardID != "")){
+    		send = 'php/backend.php?action=borrow&bookID=' + bookID + '&cardID=' + cardID ;
+    		$http.get(send).success(function(data) {
+    			if(data > 0){
+    				alert('借书成功');
+    				$http.get('php/backend.php?action=showBook').success(function(data) {
+						$scope.books = data;
+					});
+    			} else{
+    				alert('借书失败');
+    			}
+    		})
     	}
   	}
 }
 function cardControl($scope, $http) {
-	var send, cardID;
-	if($.cookie('privilege') >= 10){
-		window.cardID = cardID = prompt("请输入借书证号");
 
-		if ((cardID != null) && (cardID != "")){
-			send = 'php/backend.php?action=showCardInfo&cardID=' + cardID;
-			$http.get(send).success(function(data) {
-				console.log(data.length);
-				if((data.length) > 0){
-					$scope.cardInfo = data;
-					$('#cardInfo').slideDown();
-				} else{
-					alert('该借书卡不存在');
-				}
-			});
-		};
-
-		send = 'php/backend.php?action=showBorrow&cardID=' + cardID;
-		$http.get(send).success(function(data) {
-			$scope.borrows = data;
-		});
-		$scope.orderProp = 'bookID';
-
-		$scope.return = function(borrowID) {
-    		var send;
-
-    		send = 'php/backend.php?action=return&borrowID=' + borrowID;
-    		$http.get(send).success(function(data) {
-    			if(data == 0){
-    				alert('还书成功');
-    				send = 'php/backend.php?action=showBorrow&cardID=' + cardID;
-    				$http.get(send).success(function(data) {
-						$scope.borrows = data;
-					});
-    			} else{
-    				alert('还书失败');
-    			}
-    		})
-  		}
-	} else{
+	if(!($.cookie('privilege') >= 10)){
 		alert('值班员尚未登录');
+		history.back();
+		return;
 	}
 
+	var send, cardID;
+	window.cardID = cardID = prompt("请输入借书证号");
+
+	if ((cardID != null) && (cardID != "")){
+		send = 'php/backend.php?action=showCardInfo&cardID=' + cardID;
+		$http.get(send).success(function(data) {
+			if((data.length) > 0){
+				$scope.cardInfo = data;
+				$('#cardInfo').slideDown();
+			} else{
+				alert('该借书卡不存在');
+			}
+		});
+	};
+
+	send = 'php/backend.php?action=showBorrow&cardID=' + cardID;
+	$http.get(send).success(function(data) {
+		$scope.borrows = data;
+	});
+	$scope.orderProp = 'bookID';
+
+	$scope.return = function(borrowID) {
+    	var send;
+
+    	send = 'php/backend.php?action=return&borrowID=' + borrowID;
+    	$http.get(send).success(function(data) {
+    		if(data == 0){
+    			alert('还书成功');
+    			send = 'php/backend.php?action=showBorrow&cardID=' + cardID;
+    			$http.get(send).success(function(data) {
+					$scope.borrows = data;
+				});
+    		} else{
+    			alert('还书失败');
+    		}
+    	})
+  	}
 }
 
 function adminBookControl($scope, $http) {
+
+	if(!($.cookie('privilege') >= 60)){
+		alert('你没有权限访问本功能');
+		history.back();
+		return;
+	}
 
 	$scope.addCategory = function() {
 		var send;
@@ -219,52 +229,14 @@ function adminBookControl($scope, $http) {
 		}
 	}
 }
-function adminStaffControl($scope, $http){
-	$http.get('php/backend.php?action=showAdmin').success(function(data) {
-		$scope.admins = data;
-	});
-	$scope.orderProp = 'adminID';
 
-	$scope.deleteAdmin = function(adminID) {
-		if(confirm("你真的要删除这个管理员吗？")){
-			var send;
-			send = 'php/backend.php?action=deleteAdmin&adminID=' + adminID;
-			
-			$http.get(send).success(function(data) {
-				if(data == 0){
-					alert('删除成功');
-				} else{
-					alert('删除失败');
-				}
-			});
-		}
-	}
-
-	$scope.editAdmin = function(adminID){
-		$.each($scope.admins, function(key, value) {
-			if((value['adminID'] == adminID)){
-				$scope.newAdmin = value;
-			}
-		});
-		$('#loginName').attr('disabled', 'disabled');
-		$('html,body').animate({scrollTop: 0});
-	}
-
-	$scope.updateAdmin = function(){
-		var send;
-
-		send='php/backend.php?action=updateAdmin&adminID=' + $scope.newAdmin.adminID  + '&loginName=' + $scope.newAdmin.loginName + '&password=' + $scope.newAdmin.password + '&name=' + $scope.newAdmin.name + '&phone=' + $scope.newAdmin.phone + '&privilege=' + $scope.newAdmin.privilege ;
-
-		$http.get(send).success(function(data) {
-			if(data == 0){
-				alert('更新管理员成功');
-			} else{
-				alert('更新管理员失败');
-			}
-		});
-	}
-}
 function adminCardControl($scope, $http){
+	if(!($.cookie('privilege') >= 60)){
+		alert('你没有权限访问本功能');
+		history.back();
+		return;
+	}
+
 	$http.get('php/backend.php?action=showCard').success(function(data) {
 		$scope.cards = data;
 	});
@@ -307,5 +279,57 @@ function adminCardControl($scope, $http){
 				}
 			});
 		}
+	}
+}
+
+function adminStaffControl($scope, $http){
+	if(!($.cookie('privilege') >= 100)){
+		alert('你没有权限访问本功能');
+		history.back();
+		return;
+	}
+
+	$http.get('php/backend.php?action=showAdmin').success(function(data) {
+		$scope.admins = data;
+	});
+	$scope.orderProp = 'adminID';
+
+	$scope.deleteAdmin = function(adminID) {
+		if(confirm("你真的要删除这个管理员吗？")){
+			var send;
+			send = 'php/backend.php?action=deleteAdmin&adminID=' + adminID;
+			
+			$http.get(send).success(function(data) {
+				if(data == 0){
+					alert('删除成功');
+				} else{
+					alert('删除失败');
+				}
+			});
+		}
+	}
+
+	$scope.editAdmin = function(adminID){
+		$.each($scope.admins, function(key, value) {
+			if((value['adminID'] == adminID)){
+				$scope.newAdmin = value;
+			}
+		});
+		$('#loginName').attr('disabled', 'disabled');
+		$('html,body').animate({scrollTop: 0});
+	}
+
+	$scope.updateAdmin = function(){
+		var send;
+
+		send='php/backend.php?action=updateAdmin&adminID=' + $scope.newAdmin.adminID  + '&loginName=' + $scope.newAdmin.loginName + '&password=' + $scope.newAdmin.password + '&name=' + $scope.newAdmin.name + '&phone=' + $scope.newAdmin.phone + '&privilege=' + $scope.newAdmin.privilege ;
+
+		$http.get(send).success(function(data) {
+			if(data == 0){
+				alert('更新管理员成功');
+			} else{
+				alert('更新管理员失败');
+			}
+		});
 	}
 }
