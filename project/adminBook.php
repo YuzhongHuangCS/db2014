@@ -50,19 +50,19 @@
 		</div>
 	</div>
 	<div id="controlBar">
-		<div id="search">Search: <input ng-model="query"></div>
+		<div id="search">搜索: <input placeholder="快速过滤" ng-model="query"></div>
 		<div id="sort">
-			Sort by:
+			排序:
 			<select ng-model="orderProp">
-				<option value="bookID">bookID</option>
-  				<option value="title">title</option>
-  				<option value="categoryName">category</option>
-  				<option value="author">author</option>
-  				<option value="press">press</option>
-  				<option value="year">year</option>
-  				<option value="price">price</option>
-  				<option value="stock">stock</option>
-  				<option value="total">total</option>
+				<option value="bookID">书号</option>
+  				<option value="title">标题</option>
+  				<option value="categoryName">分类</option>
+  				<option value="author">作者</option>
+  				<option value="press">出版社</option>
+  				<option value="year">年丰</option>
+  				<option value="price">价格</option>
+  				<option value="stock">库存</option>
+  				<option value="total">总数</option>
 			</select>
 		</div>
 	</div>

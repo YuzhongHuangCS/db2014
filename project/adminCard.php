@@ -24,23 +24,23 @@
 		</form>
 	</div>
 	<div id="controlBar">
-		<div id="search">Search: <input ng-model="query"></div>
+		<div id="search">搜索: <input placeholder="快速过滤" ng-model="query"></div>
 		<div id="sort">
-			Sort by:
+			排序：
 			<select ng-model="orderProp">
-				<option value="cardID">cardID</option>
-  				<option value="name">name</option>
-  				<option value="phone">department</option>
-  				<option value="privilege">privilege</option>
+				<option value="cardID">卡号</option>
+  				<option value="name">姓名</option>
+  				<option value="phone">院系</option>
+  				<option value="privilege">权限</option>
 			</select>
 		</div>
 	</div>
 	<table>
 		<tr>
-			<th>cardID</th>
-			<th>name</th>
-			<th>department</th>
-			<th>privilege</th>
+			<th>卡号</th>
+			<th>姓名</th>
+			<th>院系</th>
+			<th>权限</th>
 			<th>编辑</th>
 			<th>删除</th>
 		</tr>
