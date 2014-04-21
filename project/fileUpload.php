@@ -42,10 +42,10 @@
 	
 	$content = '<p id="tip">将要批量入库的书籍信息</p>';
 	$content .= '<table>';
-	$content .= '<tr><th>类别代号</th><th>标题</th><th>出版社</th><th>年份</th><th>作者</th><th>价格</th><th>库存</th><th>总量</th></tr>';
+	$content .= '<tr><th>书号</th><th>标题</th><th>分类</th><th>出版社</th><th>年份</th><th>作者</th><th>价格</th><th>库存</th><th>总量</th></tr>';
 	foreach ($row as $key => $value) {
 		if($value[0]){
-			$content .= '<tr>' . '<td>' . $value[0] . '</td><td>' . $value[1] .'</td><td>' . $value[2]. '</td><td>' . $value[3].  '</td><td>' . $value[4].  '</td><td>' . $value[5] . '</td><td>' . $value[6] . '</td><td>' . $value[7] . '</td></tr>' ;
+			$content .= '<tr>' . '<td>' . $value[0] . '</td><td>' . $value[1] .'</td><td>' . $value[2] .'</td><td>' . $value[3]. '</td><td>' . $value[4].  '</td><td>' . $value[5].  '</td><td>' . $value[6] . '</td><td>' . $value[7] . '</td><td>' . $value[8] . '</td></tr>' ;
 		}
 	}
 

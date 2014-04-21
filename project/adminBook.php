@@ -30,6 +30,7 @@
 				<select ng-model="newBook.categoryID">
 					<option ng-repeat="category in categories" value={{category.categoryID}}>{{category.categoryName}}</option>
 				</select>
+				<input type="text" ng-model="newBook.bookID" placeholder="书号" />
 				<input type="text" ng-model="newBook.title" placeholder="书名" />
 				<input type="text" ng-model="newBook.author" placeholder="作者" />
 				<input type="text" ng-model="newBook.press" placeholder="出版社" />
@@ -37,7 +38,8 @@
 				<input type="text" ng-model="newBook.price" placeholder="价格" />
 				<input type="text" ng-model="newBook.stock" placeholder="库存" />
 				<input type="text" ng-model="newBook.total" placeholder="总数" />
-				<input type="submit" value="提交" ng-click="updateBook()"/>
+				<input type="submit" id="action" value="添加" ng-click="addBook()" />
+				<input type="submit" id="action" value="编辑" ng-click="updateBook()" />
 			</form>
 		</div>
 

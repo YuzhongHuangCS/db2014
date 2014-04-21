@@ -167,14 +167,19 @@
 			echo($conn->sqlstate);
 			break;
 
+		case 'addBook':
+			checkPrivilege(60);
+
+			$sql = 'INSERT INTO `book` (`bookID`, `categoryID`, `title`, `press`, `year`, `author`, `price`, `stock`, `total`) VALUES (' . $bookID . ', ' . $categoryID . ', "' . $title. '", "' . $press. '", '. $year . ', "'. $author . '", '. $price . ', ' . $stock . ', '. $total . ')';
+			$conn->query($sql);
+			echo($conn->error);
+			break;
+
 		case 'updateBook':
 			checkPrivilege(60);
 
-			if($bookID){
-				$sql = 'UPDATE `book` SET `categoryID` = ' . $categoryID . ', `title` = "' . $title . '" , `press` = "' . $press . '" , `year`=' . $year . ', `author` = "' . $author . '" , `price`= ' . $price . ', `stock`= ' . $stock . ', `total`=' . $total . ' WHERE `book`.`bookID` = ' . $bookID;
-			} else{
-				$sql = 'INSERT INTO `book` (`bookID`, `categoryID`, `title`, `press`, `year`, `author`, `price`, `stock`, `total`) VALUES (NULL, ' . $categoryID . ', "' . $title. '", "' . $press. '", '. $year . ', "'. $author . '", '. $price . ', ' . $stock . ', '. $total . ')';
-			}
+			$sql = 'UPDATE `book` SET `categoryID` = ' . $categoryID . ', `title` = "' . $title . '" , `press` = "' . $press . '" , `year`=' . $year . ', `author` = "' . $author . '" , `price`= ' . $price . ', `stock`= ' . $stock . ', `total`=' . $total . ' WHERE `book`.`bookID` = ' . $bookID;
+
 			$conn->query($sql);
 			echo($conn->sqlstate);
 			break;
@@ -187,35 +192,15 @@
 			echo($conn->sqlstate);
 			break;
 
-		case 'updateAdmin':
-			checkPrivilege(100);
+		case 'addCard':
+			checkPrivilege(60);
 
-			if($adminID){
-				if($password){
-					$md5 = md5($loginName . $adminID . $adminID . $password);
-					$sql = 'UPDATE `admin` SET `loginName` = "' . $loginName . '", `password` = "' . $md5 . '", `name` = "' . $name . '" , `phone` = "' . $phone . '" , `privilege`= ' . $privilege . ' WHERE `admin`.`adminID` = ' . $adminID ;
-				}else{
-					$sql = 'UPDATE `admin` SET `loginName` = "' . $loginName . '", `name` = "' . $name . '" , `phone` = "' . $phone . '" , `privilege`= ' . $privilege . ' WHERE `admin`.`adminID` = ' . $adminID ;
-				}
-			} else{
-				$sql = 'INSERT INTO `admin` (`adminID`, `loginName`, `password`, `name`, `phone`, `privilege`) VALUES (NULL, "' . $loginName . '", "' . $password . '", "' . $name . '", "' . $phone . '", ' . $privilege . ')';
-				$conn->query($sql);
-				$adminID = $conn->insert_id;
-				$md5 = md5($loginName . $adminID . $adminID . $password);
-				$sql = 'UPDATE `admin` SET `password` = "' . $md5 . '" WHERE `admin`.`password` = "' . $password . '"';
-			}
+			$sql = 'INSERT INTO `card` (`cardID`, `name`, `department`, `privilege`) VALUES (' . $cardID .', "' . $name . '", "' . $department . '", ' . $privilege . ')';
+
 			$conn->query($sql);
 			echo($conn->sqlstate);
 			break;
 
-		case 'deleteAdmin':
-			checkPrivilege(100);
-
-			$sql = 'DELETE FROM `admin` WHERE `admin`.`adminID` = ' . $adminID;
-			$conn->query($sql);
-			echo($conn->sqlstate);
-			break;
-		
 		case 'updateCard':
 			checkPrivilege(60);
 
@@ -253,7 +238,7 @@
 
 			foreach ($row as $key => $value) {
 				if($value[0]){
-					$sql = 'INSERT INTO `book` (`bookID`, `categoryID`, `title`, `press`, `year`, `author`, `price`, `stock`, `total`) VALUES (NULL, ' . $value[0] . ', "' . $value[1] . '", "' . $value[2] . '", ' . $value[3] . ', "' . $value[4] . '", ' . $value[5] . ', ' . $value[6] . ', ' . $value[7] . ')';
+					$sql = 'INSERT INTO `book` (`bookID`, `title`, `categoryID`, `press`, `year`, `author`, `price`, `stock`, `total`) VALUES (' . $value[0] . ', "' . $value[1] . '", ' . $value[2] . ', "' . $value[3] . '", ' . $value[4] . ', "' . $value[5] . '", ' . $value[6] . ', ' . $value[7] . ', ' . $value[8] . ')';
 					$conn->query($sql);
 					if($conn->error){
 						$errorCount++;
@@ -268,6 +253,35 @@
 				$conn->query('ROLLBACK');
 				echo('failed');
 			}
+			break;
+
+		case 'updateAdmin':
+			checkPrivilege(100);
+
+			if($adminID){
+				if($password){
+					$md5 = md5($loginName . $adminID . $adminID . $password);
+					$sql = 'UPDATE `admin` SET `loginName` = "' . $loginName . '", `password` = "' . $md5 . '", `name` = "' . $name . '" , `phone` = "' . $phone . '" , `privilege`= ' . $privilege . ' WHERE `admin`.`adminID` = ' . $adminID ;
+				}else{
+					$sql = 'UPDATE `admin` SET `loginName` = "' . $loginName . '", `name` = "' . $name . '" , `phone` = "' . $phone . '" , `privilege`= ' . $privilege . ' WHERE `admin`.`adminID` = ' . $adminID ;
+				}
+			} else{
+				$sql = 'INSERT INTO `admin` (`adminID`, `loginName`, `password`, `name`, `phone`, `privilege`) VALUES (NULL, "' . $loginName . '", "' . $password . '", "' . $name . '", "' . $phone . '", ' . $privilege . ')';
+				$conn->query($sql);
+				$adminID = $conn->insert_id;
+				$md5 = md5($loginName . $adminID . $adminID . $password);
+				$sql = 'UPDATE `admin` SET `password` = "' . $md5 . '" WHERE `admin`.`password` = "' . $password . '"';
+			}
+			$conn->query($sql);
+			echo($conn->sqlstate);
+			break;
+
+		case 'deleteAdmin':
+			checkPrivilege(100);
+
+			$sql = 'DELETE FROM `admin` WHERE `admin`.`adminID` = ' . $adminID;
+			$conn->query($sql);
+			echo($conn->sqlstate);
 			break;
 
 		default:

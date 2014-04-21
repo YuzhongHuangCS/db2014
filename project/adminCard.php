@@ -17,10 +17,12 @@
 	<div id="updateBar">
 		<span>编辑借书证信息:</span>
 		<form ng-model="newCard">
+			<input type="text" ng-model="newCard.cardID" placeholder="卡号" />
 			<input type="text" ng-model="newCard.name" placeholder="姓名" />
 			<input type="text" ng-model="newCard.department" placeholder="院系" />
 			<input type="text" ng-model="newCard.privilege" placeholder="权限" />
-			<input type="submit" value="提交" ng-click="updateCard()"/>
+			<input type="submit" value="添加" ng-click="addCard()"/>
+			<input type="submit" value="编辑" ng-click="updateCard()"/>
 		</form>
 	</div>
 	<div id="controlBar">

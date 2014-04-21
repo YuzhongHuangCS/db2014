@@ -167,6 +167,15 @@ function adminBookControl($scope, $http) {
 		return;
 	}
 
+	$http.get('php/backend.php?action=showBook').success(function(data) {
+		$scope.books = data;
+	});
+	$scope.orderProp = 'bookID';
+
+	$http.get('php/backend.php?action=showCategory').success(function(categoryData) {
+		$scope.categories = categoryData;
+	});
+
 	$scope.addCategory = function() {
 		var send;
 
@@ -180,9 +189,27 @@ function adminBookControl($scope, $http) {
 		});
 	}
 
-	$http.get('php/backend.php?action=showCategory').success(function(categoryData) {
-		$scope.categories = categoryData;
-	});
+	$scope.addBook = function(){
+		var send;
+
+		send='php/backend.php?action=addBook&bookID=' + $scope.newBook.bookID  + '&categoryID=' + $scope.newBook.categoryID + '&title=' + $scope.newBook.title + '&press=' + $scope.newBook.press + '&year=' + $scope.newBook.year + '&author=' + $scope.newBook.author + '&price=' + $scope.newBook.price + '&stock='+ $scope.newBook.stock + '&total=' + $scope.newBook.total;
+		$http.get(send).success(function(data) {
+			if(data == 0){
+				alert('添加图书成功');
+			} else{
+				alert('添加图书失败');
+			}
+		});
+	}
+
+	$scope.editBook = function(bookID){
+		$.each($scope.books, function(key, value) {
+			if((value['bookID'] == bookID)){
+				$scope.newBook = value;
+			}
+		});
+		$('html,body').animate({scrollTop: 0});
+	}
 
 	$scope.updateBook = function(){
 		var send;
@@ -195,20 +222,6 @@ function adminBookControl($scope, $http) {
 				alert('更新图书失败');
 			}
 		});
-	}
-
-	$http.get('php/backend.php?action=showBook').success(function(data) {
-		$scope.books = data;
-	});
-	$scope.orderProp = 'bookID';
-
-	$scope.editBook = function(bookID){
-		$.each($scope.books, function(key, value) {
-			if((value['bookID'] == bookID)){
-				$scope.newBook = value;
-			}
-		});
-		$('html,body').animate({scrollTop: 0});
 	}
 
 	$scope.deleteBook = function(bookID) {
@@ -249,6 +262,21 @@ function adminCardControl($scope, $http){
 			}
 		});
 		$('html,body').animate({scrollTop: 0});
+	}
+
+	$scope.addCard = function(){
+		var send;
+
+		send='php/backend.php?action=addCard&cardID=' + $scope.newCard.cardID  + '&name=' + $scope.newCard.name + '&department=' + $scope.newCard.department + '&privilege=' + $scope.newCard.privilege ;
+
+
+		$http.get(send).success(function(data) {
+			if(data == 0){
+				alert('添加借书证成功');
+			} else{
+				alert('添加借书证失败');
+			}
+		});
 	}
 
 	$scope.updateCard = function(){
