@@ -29,3 +29,5 @@ select{color:#000;border-radius:.3rem;padding:.5rem 1rem}select option{border-ra
 #card #cardInfo{display:none;margin:6rem auto 0;padding:1rem;text-align:center;width:48rem;color:#333;background-color:#eee;border-radius:.5rem;box-shadow:0 0 1rem #fff}#card #cardInfo ul{margin:0;list-style:none}#card #cardInfo ul li{display:inline;margin-right:2rem;font-size:1.2rem}
 #adminBook #updateBar #editArea form span{color:#fff}
 #adminBook #updateBar #massAdd #file{color:#fff}
+#fileUpload #tip{margin:5rem auto 0;text-align:center;letter-spacing:1px;font-size:1.2rem;color:#fff}
+#fileUpload #confirmBar{margin:4rem auto 0;text-align:center;font-size:1.2rem}#fileUpload #confirmBar button{margin-left:4rem}

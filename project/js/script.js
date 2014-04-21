@@ -333,3 +333,16 @@ function adminStaffControl($scope, $http){
 		});
 	}
 }
+function confirmMassAdd(fileName){
+	var send;
+
+	send = 'php/backend.php?action=massAdd&fileName=' + fileName;
+	$.get(send, function(data) {
+		if(data == 'success'){
+			alert('批量添加成功');
+		} else{
+			alert('批量添加失败');
+		}
+		history.back();
+	});
+}

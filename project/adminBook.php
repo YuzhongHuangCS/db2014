@@ -22,6 +22,7 @@
 				<input type="submit" value="提交" ng-click="addCategory()"/>
 			</form>
 		</div>
+
 		<div id="editArea">
 			<span>添加/编辑图书：</span>
 			<form ng-model="newBook">
@@ -42,7 +43,7 @@
 
 		<div id="massAdd">
 			<span>批量添加:</span>
-			<form action="php/fileUpload.php" method="post" enctype="multipart/form-data">
+			<form action="fileUpload.php" method="post" enctype="multipart/form-data">
 				<input type="file" name="file" id="file"/> 
 				<input type="submit" name="submit" value="上传" />
 			</form>

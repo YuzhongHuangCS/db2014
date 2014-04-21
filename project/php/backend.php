@@ -21,7 +21,8 @@
 	$phone = filter_input(INPUT_GET, 'phone', FILTER_SANITIZE_STRING);
 	$privilege = filter_input(INPUT_GET, 'privilege', FILTER_SANITIZE_NUMBER_INT);
 	$department = filter_input(INPUT_GET, 'department', FILTER_SANITIZE_STRING);
-	
+	$fileName = filter_input(INPUT_GET, 'fileName', FILTER_SANITIZE_STRING);
+
 	function checkPrivilege($expect){
 		session_id($_COOKIE['PHPSESSID']);
 		session_start();
@@ -233,6 +234,40 @@
 			$sql = 'DELETE FROM `card` WHERE `card`.`cardID` = ' . $cardID;
 			$conn->query($sql);
 			echo($conn->sqlstate);
+			break;
+
+		case 'massAdd':
+			checkPrivilege(60);
+
+			$file=fopen('../upload/' . $fileName, 'r')  or die('Unable to open file!');
+			$row = array();
+			while(!feof($file)) {
+				$row[] = explode(', ', fgets($file));
+			}
+			fclose($file);
+
+			unlink('../upload/' . $fileName);
+
+			$errorCount = 0;
+			$conn->query('START TRANSACTION');
+
+			foreach ($row as $key => $value) {
+				if($value[0]){
+					$sql = 'INSERT INTO `book` (`bookID`, `categoryID`, `title`, `press`, `year`, `author`, `price`, `stock`, `total`) VALUES (NULL, ' . $value[0] . ', "' . $value[1] . '", "' . $value[2] . '", ' . $value[3] . ', "' . $value[4] . '", ' . $value[5] . ', ' . $value[6] . ', ' . $value[7] . ')';
+					$conn->query($sql);
+					if($conn->error){
+						$errorCount++;
+					}
+				}
+			}
+
+			if($errorCount == 0){
+				$conn->query('COMMIT');
+				echo('success');
+			} else{
+				$conn->query('ROLLBACK');
+				echo('failed');
+			}
 			break;
 
 		default:
