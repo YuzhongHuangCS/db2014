@@ -82,9 +82,13 @@ function checkLogin(){
 }
 
 function bookControl($scope, $http) {
-	$http.get('php/backend.php?action=showBook').success(function(data) {
-		$scope.books = data;
-	});
+	function refresh(){
+		$http.get('php/backend.php?action=showBook').success(function(data) {
+			$scope.books = data;
+		});
+	}
+
+	refresh();
 	$scope.orderProp = 'bookID';
 
 	$scope.borrow = function(bookID) {
@@ -102,9 +106,7 @@ function bookControl($scope, $http) {
     		$http.get(send).success(function(data) {
     			if(data > 0){
     				alert('借书成功');
-    				$http.get('php/backend.php?action=showBook').success(function(data) {
-						$scope.books = data;
-					});
+    				refresh();
     			} else{
     				alert('借书失败');
     			}
@@ -135,10 +137,14 @@ function cardControl($scope, $http) {
 		});
 	};
 
-	send = 'php/backend.php?action=showBorrow&cardID=' + cardID;
-	$http.get(send).success(function(data) {
-		$scope.borrows = data;
-	});
+	function refresh(){
+		send = 'php/backend.php?action=showBorrow&cardID=' + cardID;
+		$http.get(send).success(function(data) {
+			$scope.borrows = data;
+		});
+	}
+
+	refresh();
 	$scope.orderProp = 'bookID';
 
 	$scope.return = function(borrowID) {
@@ -148,10 +154,7 @@ function cardControl($scope, $http) {
     	$http.get(send).success(function(data) {
     		if(data == 0){
     			alert('还书成功');
-    			send = 'php/backend.php?action=showBorrow&cardID=' + cardID;
-    			$http.get(send).success(function(data) {
-					$scope.borrows = data;
-				});
+    			refresh();
     		} else{
     			alert('还书失败');
     		}
@@ -167,14 +170,21 @@ function adminBookControl($scope, $http) {
 		return;
 	}
 
-	$http.get('php/backend.php?action=showBook').success(function(data) {
-		$scope.books = data;
-	});
-	$scope.orderProp = 'bookID';
+	function refreshBook(){
+		$http.get('php/backend.php?action=showBook').success(function(data) {
+			$scope.books = data;
+		});
+	}
+	
+	function refreshCategory(){
+		$http.get('php/backend.php?action=showCategory').success(function(data) {
+			$scope.categories = data;
+		});
+	}
 
-	$http.get('php/backend.php?action=showCategory').success(function(categoryData) {
-		$scope.categories = categoryData;
-	});
+	refreshBook();
+	$scope.orderProp = 'bookID';
+	refreshCategory();
 
 	$scope.addCategory = function() {
 		var send;
@@ -183,6 +193,7 @@ function adminBookControl($scope, $http) {
 		$http.get(send).success(function(data) {
 			if(data == 0){
 				alert('添加分类成功');
+				refreshCategory();
 			} else{
 				alert('添加分类失败');
 			}
@@ -192,10 +203,31 @@ function adminBookControl($scope, $http) {
 	$scope.addBook = function(){
 		var send;
 
+		if(! isInt($scope.newBook.bookID)){
+			alert('书号需要为整数');
+			return;
+		}
+		if(! isInt($scope.newBook.year)){
+			alert('年份需要为整数');
+			return;
+		}
+		if(! isInt($scope.newBook.price)){
+			alert('价格需要为数字');
+			return;
+		}
+		if(! isInt($scope.newBook.stock)){
+			alert('库存需要为整数');
+			return;
+		}
+		if(! isInt($scope.newBook.year)){
+			alert('总数需要为整数');
+			return;
+		}
 		send='php/backend.php?action=addBook&bookID=' + $scope.newBook.bookID  + '&categoryID=' + $scope.newBook.categoryID + '&title=' + $scope.newBook.title + '&press=' + $scope.newBook.press + '&year=' + $scope.newBook.year + '&author=' + $scope.newBook.author + '&price=' + $scope.newBook.price + '&stock='+ $scope.newBook.stock + '&total=' + $scope.newBook.total;
 		$http.get(send).success(function(data) {
 			if(data == 0){
 				alert('添加图书成功');
+				refreshBook();
 			} else{
 				alert('添加图书失败');
 			}
@@ -212,12 +244,26 @@ function adminBookControl($scope, $http) {
 	}
 
 	$scope.updateBook = function(){
+		if(! isInt($scope.newBook.bookID)){
+			alert('书号需要为整数');
+			return;
+		}
+		if(! isInt($scope.newBook.year)){
+			alert('年份需要为整数');
+			return;
+		}
+		if(! isInt($scope.newBook.price)){
+			alert('价格需要为数字');
+			return;
+		}
+
 		var send;
 
 		send='php/backend.php?action=updateBook&bookID=' + $scope.newBook.bookID  + '&categoryID=' + $scope.newBook.categoryID + '&title=' + $scope.newBook.title + '&press=' + $scope.newBook.press + '&year=' + $scope.newBook.year + '&author=' + $scope.newBook.author + '&price=' + $scope.newBook.price + '&stock='+ $scope.newBook.stock + '&total=' + $scope.newBook.total;
 		$http.get(send).success(function(data) {
 			if(data == 0){
 				alert('更新图书成功');
+				refreshBook();
 			} else{
 				alert('更新图书失败');
 			}
@@ -232,9 +278,7 @@ function adminBookControl($scope, $http) {
 			$http.get(send).success(function(data) {
 				if(data == 0){
 					alert('删除成功');
-						$http.get('php/backend.php?action=showBook').success(function(data) {
-						$scope.books = data;
-					});
+					refreshBook();
 				} else{
 					alert('删除失败');
 				}
@@ -250,9 +294,13 @@ function adminCardControl($scope, $http){
 		return;
 	}
 
-	$http.get('php/backend.php?action=showCard').success(function(data) {
-		$scope.cards = data;
-	});
+	function refresh(){
+		$http.get('php/backend.php?action=showCard').success(function(data) {
+			$scope.cards = data;
+		});
+	}
+	refresh();
+
 	$scope.orderProp = 'cardID';
 
 	$scope.editCard = function(CardID){
@@ -265,6 +313,14 @@ function adminCardControl($scope, $http){
 	}
 
 	$scope.addCard = function(){
+		if(! isInt($scope.newCard.cardID)){
+			alert('卡号需要为整数');
+			return;
+		}
+		if(! isInt($scope.newCard.privilege)){
+			alert('权限需要为整数');
+			return;
+		}
 		var send;
 
 		send='php/backend.php?action=addCard&cardID=' + $scope.newCard.cardID  + '&name=' + $scope.newCard.name + '&department=' + $scope.newCard.department + '&privilege=' + $scope.newCard.privilege ;
@@ -273,6 +329,7 @@ function adminCardControl($scope, $http){
 		$http.get(send).success(function(data) {
 			if(data == 0){
 				alert('添加借书证成功');
+				refresh();
 			} else{
 				alert('添加借书证失败');
 			}
@@ -280,6 +337,15 @@ function adminCardControl($scope, $http){
 	}
 
 	$scope.updateCard = function(){
+		if(! isInt($scope.newCard.cardID)){
+			alert('卡号需要为整数');
+			return;
+		}
+		if(! isInt($scope.newCard.privilege)){
+			alert('权限需要为整数');
+			return;
+		}
+
 		var send;
 
 		send='php/backend.php?action=updateCard&cardID=' + $scope.newCard.cardID  + '&name=' + $scope.newCard.name + '&department=' + $scope.newCard.department + '&privilege=' + $scope.newCard.privilege ;
@@ -288,6 +354,7 @@ function adminCardControl($scope, $http){
 		$http.get(send).success(function(data) {
 			if(data == 0){
 				alert('更新借书证成功');
+				refresh();
 			} else{
 				alert('更新借书证失败');
 			}
@@ -302,6 +369,7 @@ function adminCardControl($scope, $http){
 			$http.get(send).success(function(data) {
 				if(data == 0){
 					alert('删除成功');
+					refresh();
 				} else{
 					alert('删除失败');
 				}
@@ -317,9 +385,13 @@ function adminStaffControl($scope, $http){
 		return;
 	}
 
-	$http.get('php/backend.php?action=showAdmin').success(function(data) {
-		$scope.admins = data;
-	});
+	function refresh(){
+		$http.get('php/backend.php?action=showAdmin').success(function(data) {
+			$scope.admins = data;
+		});
+	}
+
+	refresh();
 	$scope.orderProp = 'adminID';
 
 	$scope.deleteAdmin = function(adminID) {
@@ -330,6 +402,7 @@ function adminStaffControl($scope, $http){
 			$http.get(send).success(function(data) {
 				if(data == 0){
 					alert('删除成功');
+					refresh();
 				} else{
 					alert('删除失败');
 				}
@@ -348,6 +421,11 @@ function adminStaffControl($scope, $http){
 	}
 
 	$scope.updateAdmin = function(){
+		if(! isInt($scope.newAdmin.privilege)){
+			alert('权限需要为整数');
+			return;
+		}
+
 		var send;
 
 		send='php/backend.php?action=updateAdmin&adminID=' + $scope.newAdmin.adminID  + '&loginName=' + $scope.newAdmin.loginName + '&password=' + $scope.newAdmin.password + '&name=' + $scope.newAdmin.name + '&phone=' + $scope.newAdmin.phone + '&privilege=' + $scope.newAdmin.privilege ;
@@ -355,6 +433,7 @@ function adminStaffControl($scope, $http){
 		$http.get(send).success(function(data) {
 			if(data == 0){
 				alert('更新管理员成功');
+				refresh();
 			} else{
 				alert('更新管理员失败');
 			}
@@ -373,4 +452,12 @@ function confirmMassAdd(fileName){
 		}
 		history.back();
 	});
+}
+function isInt(n) {
+   return n % 1 === 0;
+}
+function isFloat(n) {
+   if( n.match(/^-?\d*(\.\d+)?$/) && !isNaN(parseFloat(n)) && (n%1!=0) )
+      return true;
+   return false;
 }

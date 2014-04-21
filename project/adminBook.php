@@ -26,12 +26,12 @@
 		<div id="editArea">
 			<span>添加/编辑图书：</span>
 			<form ng-model="newBook">
+				<input type="text" ng-model="newBook.bookID" placeholder="书号, 添加后不能修改" />
+				<input type="text" ng-model="newBook.title" placeholder="书名" />
 				<span>分类：</span>
 				<select ng-model="newBook.categoryID">
 					<option ng-repeat="category in categories" value={{category.categoryID}}>{{category.categoryName}}</option>
 				</select>
-				<input type="text" ng-model="newBook.bookID" placeholder="书号" />
-				<input type="text" ng-model="newBook.title" placeholder="书名" />
 				<input type="text" ng-model="newBook.author" placeholder="作者" />
 				<input type="text" ng-model="newBook.press" placeholder="出版社" />
 				<input type="text" ng-model="newBook.year" placeholder="年份" />

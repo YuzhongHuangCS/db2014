@@ -69,7 +69,8 @@
 		case 'showCardInfo':
 			checkPrivilege(10);
 
-			$sql = 'SELECT cardID, name, department, privilege FROM card WHERE cardID = ' . $cardID;
+			$sql = 'SELECT cardID, name, department, privilege FROM card WHERE cardID = ' . $cardID ;
+
 			$result = $conn->query($sql);
 			$row = array();
 			while($r = $result->fetch_assoc()){
@@ -87,7 +88,7 @@
 		case 'showCard':
 			checkPrivilege(60);
 			
-			$sql = 'SELECT cardID, name, department, privilege FROM card';
+			$sql = 'SELECT card.cardID, card.name, card.department, card.privilege, COUNT(borrow_date) AS borrowCount, COUNT(return_date) AS returnCount FROM card LEFT JOIN borrow ON card.cardID = borrow.cardID GROUP BY card.cardID';
 			$result = $conn->query($sql);
 			$row = array();
 			while($r = $result->fetch_assoc()){
@@ -204,11 +205,7 @@
 		case 'updateCard':
 			checkPrivilege(60);
 
-			if($cardID){
-					$sql = 'UPDATE `card` SET `name` = "' . $name . '", `department` = "' . $department . '" , `privilege`= ' . $privilege . ' WHERE `card`.`cardID` = ' . $cardID ;
-			} else{
-				$sql = 'INSERT INTO `card` (`cardID`, `name`, `department`, `privilege`) VALUES (NULL, "' . $name . '", "' . $department . '", ' . $privilege . ')';
-			}
+			$sql = 'UPDATE `card` SET `name` = "' . $name . '", `department` = "' . $department . '" , `privilege`= ' . $privilege . ' WHERE `card`.`cardID` = ' . $cardID ;
 			$conn->query($sql);
 			echo($conn->sqlstate);
 			break;

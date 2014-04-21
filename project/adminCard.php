@@ -17,7 +17,7 @@
 	<div id="updateBar">
 		<span>编辑借书证信息:</span>
 		<form ng-model="newCard">
-			<input type="text" ng-model="newCard.cardID" placeholder="卡号" />
+			<input type="text" ng-model="newCard.cardID" placeholder="卡号, 添加后不能修改" />
 			<input type="text" ng-model="newCard.name" placeholder="姓名" />
 			<input type="text" ng-model="newCard.department" placeholder="院系" />
 			<input type="text" ng-model="newCard.privilege" placeholder="权限" />
@@ -33,6 +33,8 @@
 		<tr>
 			<th ng-click="orderProp = 'cardID'; reverse=!reverse">卡号</th>
 			<th ng-click="orderProp = 'name'; reverse=!reverse">姓名</th>
+			<th ng-click="orderProp = 'borrowCount'; reverse=!reverse">已借数量</th>
+			<th ng-click="orderProp = 'returnCount'; reverse=!reverse">已还数量</th>
 			<th ng-click="orderProp = 'department'; reverse=!reverse">院系</th>
 			<th ng-click="orderProp = 'privilege'; reverse=!reverse">权限</th>
 			<th>编辑</th>
@@ -40,7 +42,9 @@
 		</tr>
     	<tr ng-repeat="card in cards | filter:query | orderBy:orderProp:reverse">
     		<td>{{card.cardID}}</td>
-			<td>{{card.name}}</td>	
+			<td>{{card.name}}</td>
+			<td>{{card.borrowCount}}</td>
+			<td>{{card.returnCount}}</td>
 			<td>{{card.department}}</td>
 			<td>{{card.privilege}}</td>
 			<td ng-click="editCard(card.cardID)"><button>编辑</button></td>
