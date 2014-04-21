@@ -18,7 +18,7 @@ table{margin:3rem auto;width:90%;color:#333;border-collapse:collapse;box-shadow:
 table tr:nth-child(odd){background-color:#fff}
 table tr:nth-child(even){background-color:#e8edff}
 table tr:hover{background-color:#d0dafd}
-table th{border:1px solid #ccc;background-color:#eee;padding:1rem}
+table th{border:1px solid #ccc;background-color:#eee;padding:1rem;cursor:pointer}
 table td{border:0;padding:1rem}
 input{margin:.5rem 0;padding:.5rem 1rem;color:#000;border:0;border-radius:.3rem}
 select{color:#000;border-radius:.3rem;padding:.5rem 1rem}select option{border-radius:.3rem}

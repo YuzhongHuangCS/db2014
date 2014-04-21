@@ -44,7 +44,7 @@
 				}
 				$row[] = $r;
 			}
-			$json = urldecode(json_encode($row));
+			$json = urldecode(json_encode($row, JSON_NUMERIC_CHECK));
 			header('Content-Type: application/json; charset=utf-8');
 			echo($json);
 			$result->close();
@@ -60,7 +60,7 @@
 				}
 				$row[] = $r;
 			}
-			$json = urldecode(json_encode($row));
+			$json = urldecode(json_encode($row, JSON_NUMERIC_CHECK));
 			header('Content-Type: application/json; charset=utf-8');
 			echo($json);
 			$result->close();
@@ -78,7 +78,7 @@
 				}
 				$row[] = $r;
 			}
-			$json = urldecode(json_encode($row));
+			$json = urldecode(json_encode($row, JSON_NUMERIC_CHECK));
 			header('Content-Type: application/json; charset=utf-8');
 			echo($json);
 			$result->close();
@@ -96,7 +96,7 @@
 				}
 				$row[] = $r;
 			}
-			$json = urldecode(json_encode($row));
+			$json = urldecode(json_encode($row, JSON_NUMERIC_CHECK));
 			header('Content-Type: application/json; charset=utf-8');
 			echo($json);
 			$result->close();
@@ -114,7 +114,7 @@
 				}
 				$row[] = $r;
 			}
-			$json = urldecode(json_encode($row));
+			$json = urldecode(json_encode($row, JSON_NUMERIC_CHECK));
 			header('Content-Type: application/json; charset=utf-8');
 			echo($json);
 			$result->close();
@@ -137,7 +137,7 @@
 				}
 				$row[] = $r;
 			}
-			$json = urldecode(json_encode($row));
+			$json = urldecode(json_encode($row, JSON_NUMERIC_CHECK));
 			header('Content-Type: application/json; charset=utf-8');
 			echo($json);
 			$result->close();

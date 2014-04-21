@@ -27,28 +27,19 @@
 	</div>
 	<div id="controlBar">
 		<div id="search">搜索: <input placeholder="快速过滤" ng-model="query"></div>
-		<div id="sort">
-			排序: 
-			<select ng-model="orderProp">
-				<option value="adminID">管理员ID</option>
-  				<option value="loginName">登录名</option>
-  				<option value="name">姓名</option>
-  				<option value="phone">手机号</option>
-  				<option value="privilege">权限</option>
-			</select>
-		</div>
+		<div id="sort">点击表头排序</div>
 	</div>
 	<table>
 		<tr>
-			<th>管理员ID</th>
-			<th>登录名</th>
-			<th>姓名</th>
-			<th>手机号</th>
-			<th>权限</th>
+			<th ng-click="orderProp = 'adminID'; reverse=!reverse">管理员ID</th>
+			<th ng-click="orderProp = 'loginName'; reverse=!reverse">登录名</th>
+			<th ng-click="orderProp = 'name'; reverse=!reverse">姓名</th>
+			<th ng-click="orderProp = 'phone'; reverse=!reverse">手机号</th>
+			<th ng-click="orderProp = 'privilege'; reverse=!reverse">权限</th>
 			<th>编辑</th>
 			<th>删除</th>
 		</tr>
-    	<tr ng-repeat="admin in admins | filter:query | orderBy:orderProp">
+    	<tr ng-repeat="admin in admins | filter:query | orderBy:orderProp:reverse">
     		<td>{{admin.adminID}}</td>
 			<td>{{admin.loginName}}</td>
 			<td>{{admin.name}}</td>	

@@ -16,36 +16,23 @@
 <div id="book" ng-app ng-controller="bookControl">
 	<div id="controlBar">
 		<div id="search">搜索：<input ng-model="query" placeholder="快速过滤"></div>
-		<div id="sort">
-			排序：
-			<select ng-model="orderProp">
-				<option value="bookID">书号</option>
-  				<option value="title">书名</option>
-  				<option value="categoryName">分类</option>
-  				<option value="author">作者</option>
-  				<option value="press">出版社</option>
-  				<option value="year">年份</option>
-  				<option value="year">价格</option>
-  				<option value="stock">库存</option>
-  				<option value="total">总量</option>
-			</select>
-		</div>
+		<div id="sort">点击表头排序</div>
 	</div>
 	<table>
 		<tr>
-			<th>书号</th>
-			<th>书名</th>
-			<th>类别</th>
-			<th>作者</th>
-			<th>出版社</th>
-			<th>年份</th>
-			<th>价格</th>
-			<th>当前库存</th>
-			<th>总藏书量</th>
+			<th ng-click="orderProp = 'bookID'; reverse=!reverse">书号</th>
+			<th ng-click="orderProp = 'title'; reverse=!reverse">书名<span></span></th>
+			<th ng-click="orderProp = 'categoryName'; reverse=!reverse">类别</th>
+			<th ng-click="orderProp = 'author'; reverse=!reverse">作者</th>
+			<th ng-click="orderProp = 'press'; reverse=!reverse">出版社</th>
+			<th ng-click="orderProp = 'year'; reverse=!reverse">年份</th>
+			<th ng-click="orderProp = 'price'; reverse=!reverse">价格</th>
+			<th ng-click="orderProp = 'stock'; reverse=!reverse">当前库存</th>
+			<th ng-click="orderProp = 'total'; reverse=!reverse">总藏书量</th>
 			<th>借书</th>
 		</tr>
-    	<tr ng-repeat="book in books | filter:query | orderBy:orderProp">
-    		<td>{{book.bookID}}</td>
+    	<tr ng-repeat="book in books | filter:query | orderBy:orderProp:reverse">
+    		<td>{{book.bookID | number}}</td>
 			<td>{{book.title}}</td>
 			<td>{{book.categoryName}}</td>	
 			<td>{{book.author}}</td>
