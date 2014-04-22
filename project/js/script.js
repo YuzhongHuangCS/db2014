@@ -4,7 +4,7 @@ $(document).ready(function(){
 
 	var navElement = document.querySelector("nav");
 	var headroom = new Headroom(navElement, {
-  		"tolerance": 5,
+		"tolerance": 5,
   		"offset": 205,
  		"classes": {
   		 	"initial": "animated",
@@ -32,10 +32,6 @@ $(document).ready(function(){
 		var loginName = $('[name="loginName"]').val();
 		var password = $('[name="password"]').val();
 
-		$.post('php/login.php', {
-			loginName: loginName, 
-			password: password
-		});
 		$.post('php/login.php', {loginName: loginName, password: password}, function() {
 			if($.cookie('privilege') > 0){
 				$('#tip').fadeOut('400', function() {
